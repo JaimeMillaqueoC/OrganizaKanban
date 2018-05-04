@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vista.proyectofp;
+package vista.Principal;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,10 +18,10 @@ public class PanelActividad extends JPanel {
     public JLabel lblTiempo;
     public JLabel lblCronometro;
 
-    public PanelActividad(String lblNombreActividad, String lblTiempo, String lblCronometro) {
+    public PanelActividad(String lblNombreActividad) {
         this.lblNombreActividad = new JLabel(lblNombreActividad);
-        this.lblTiempo = new JLabel(lblTiempo);
-        this.lblCronometro = new JLabel(lblCronometro);
+        this.lblTiempo = new JLabel("Tiempo: ");
+        this.lblCronometro = new JLabel();
     }
     
     

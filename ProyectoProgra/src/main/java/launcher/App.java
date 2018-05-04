@@ -5,7 +5,7 @@
  */
 package launcher;
 
-import vista.proyectofp.VentanaPrincipal;
+import vista.Bienvenida.VentanaBienvenida;
 
 
 /**
@@ -18,7 +18,7 @@ public class App {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        VentanaPrincipal v = new VentanaPrincipal();
+        VentanaBienvenida vB = new VentanaBienvenida();
     }
     
 }

@@ -3,21 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vista.proyectofp;
+package vista.Principal;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
-import static java.awt.GridBagConstraints.FIRST_LINE_START;
 import static java.awt.GridBagConstraints.PAGE_START;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,30 +19,26 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import utilidades.IC;
 
 /**
  *
  * @author Jaime
  */
-public class PanelPerfil extends JPanel implements IC {
+public class PanelPerfil extends JPanel {
 
     private Image fondo;
     private JLabel lblIcono;
     private JLabel lblFotoPerfil;
     private JLabel lblNombreUsuario;
-    private JButton btnEditarUsuario;
-    private JButton btnAniadirNuevo;
+    public JButton btnEditarUsuario;
+    public JButton btnAniadirNuevo;
 
     public PanelPerfil() {
         this.inicializarComponentes();
     }
 
-    @Override
-    public void inicializarComponentes() {
-//        this.url = getClass().getResource("C:\\Users\\Jaime\\Documents\\VPProjects\\ImagenProyecto\\background-verde.jpg");
-
-        this.fondo = new ImageIcon("Utilizables\\fondo_azul.jpg").getImage();
+    private void inicializarComponentes(){
+        this.fondo = new ImageIcon("Utilizables\\fondo_madera.jpg").getImage();
         ImageIcon icono = new ImageIcon("Utilizables\\Logo.png");
         ImageIcon foto = new ImageIcon("Utilizables\\user-icon1.jpg");
 
@@ -62,59 +51,49 @@ public class PanelPerfil extends JPanel implements IC {
 //        icono.paintIcon(null, graphics, 0, 0);
 //        graphics.dispose();
 
-//        GridLayout gridbag = new GridLayout(5,1);
-        GridBagLayout bigMama = new GridBagLayout();
+        GridBagLayout distribucion = new GridBagLayout();
         GridBagConstraints gbc = new GridBagConstraints();
-        this.setLayout(bigMama);
+        this.setLayout(distribucion);
         Border bordejpanel = new TitledBorder(new LineBorder(Color.BLACK), "Perfil");
         this.setBorder(bordejpanel);
 
-        
+        //Agregamos Icono
         gbc.gridx = 0;
         gbc.gridy = 0;
-//        gbc.weightx = 20;
-//        gbc.weighty = 20;
-//        this.lblIcono = new JLabel("AQUI VA UN ICONO");
         this.lblIcono = new JLabel();
         this.lblIcono.setSize(200, 120);
-        Icon icon;
-        icon = new ImageIcon(icono.getImage().getScaledInstance(this.lblIcono.getWidth(), this.lblIcono.getHeight(), Image.SCALE_DEFAULT));
-        
+        Icon icon = new ImageIcon(icono.getImage().getScaledInstance(this.lblIcono.getWidth(), this.lblIcono.getHeight(), Image.SCALE_DEFAULT));
         this.lblIcono.setIcon(icon);
         this.repaint();
         this.add(this.lblIcono,gbc);
         
-        
-        gbc.weightx = 20;
-        gbc.weighty = 20;
+        //Agregamos foto de perfil
+//        gbc.weightx = 40;
+        gbc.weighty = 5;
         gbc.gridx = 0;
         gbc.gridy = 1;
-//        gbc.gridheight = 2;
-//        this.lblFotoPerfil = new JLabel("AQUI VA UNA FOTO DE PERFIL");
         this.lblFotoPerfil = new JLabel();
-        this.lblFotoPerfil.setSize(200, 120);
-        Icon foto1;
-        foto1 = new ImageIcon(foto.getImage().getScaledInstance(this.lblFotoPerfil.getWidth(), this.lblFotoPerfil.getHeight(), Image.SCALE_DEFAULT));
+        this.lblFotoPerfil.setSize(200, 200);
+        Icon foto1 = new ImageIcon(foto.getImage().getScaledInstance(this.lblFotoPerfil.getWidth(), this.lblFotoPerfil.getHeight(), Image.SCALE_DEFAULT));
         this.lblFotoPerfil.setIcon(foto1);
         this.add(this.lblFotoPerfil,gbc);
         
+        //Agregamos nombre de usuario
         gbc.gridx = 0;
         gbc.gridy = 2;
-//        gbc.gridheight = 1;
+        gbc.weightx = 10;
+        gbc.weighty = 10;
+        gbc.anchor = PAGE_START;
         this.lblNombreUsuario = new JLabel("#NOMBRE_USUARIO");
         this.add(this.lblNombreUsuario,gbc);
         
         //agregando Botones
         gbc.gridx = 0;
         gbc.gridy = 3;
-        gbc.weightx = 1;
-        gbc.weighty = 1;
+//        gbc.weightx = 10;
+//        gbc.weighty = 10;
         this.btnEditarUsuario = new JButton("Editar");
-        Dimension d = new Dimension(10,10);
-        
-        
         this.add(this.btnEditarUsuario,gbc);
-        this.btnEditarUsuario.setMaximumSize(d);
         
         gbc.gridx = 0;
         gbc.gridy = 4;
