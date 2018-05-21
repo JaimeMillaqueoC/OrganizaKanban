@@ -26,11 +26,6 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
     private VentanaEditarUsuario vEditarU;
     private boolean abierto;
     private int posY;
-    private boolean veri = true;
-    private boolean veri2 = true;
-    private int cont = 0;
-
-    
 
     public VentanaPrincipal() {
         this.inicializarComponentes();
@@ -90,8 +85,6 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
         if (this.pPorHacer.pAPorHacer.size() > 0) {
             
             for (int i = 0; i < this.pPorHacer.pAPorHacer.size(); i++) {
-                veri = true;
-                veri2 = true;
                 this.pPorHacer.pAPorHacer.get(i).btnQuitar.addActionListener(this);
                 this.pPorHacer.pAPorHacer.get(i).btnAgregar.addActionListener(this);
                 
@@ -100,17 +93,13 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
                     this.pPorHacer.pAPorHacer.remove(i);
                     this.pPorHacer.updateUI();
                 }if (this.pPorHacer.pAPorHacer.get(i).btnAgregar == e.getSource()) {
-                    if (this.pPorHacer.pAPorHacer.get(i).getTfNombreActividad().getText().equals("") && veri) {
+                    if (this.pPorHacer.pAPorHacer.get(i).getTfNombreActividad().getText().equals("")) {
                         JOptionPane.showMessageDialog(null, "¡Debe llenar con un nombre!");
-                        veri=false;
-                        this.cont++;
-                        System.out.println("contador i: "+i+"\nlargo arreglo: "+this.pPorHacer.pAPorHacer.size()+"\nContador: "+cont);
                     }
-                    if (Integer.parseInt(this.pPorHacer.pAPorHacer.get(i).getCbHora1().getSelectedItem().toString()) == 0 && Integer.parseInt(this.pPorHacer.pAPorHacer.get(i).getCbMinutos1().getSelectedItem().toString()) == 0 && Integer.parseInt(this.pPorHacer.pAPorHacer.get(i).getCbSegundos1().getSelectedItem().toString()) == 0 && veri2) {
+                    else if (Integer.parseInt(this.pPorHacer.pAPorHacer.get(i).getCbHora1().getSelectedItem().toString()) == 0 && Integer.parseInt(this.pPorHacer.pAPorHacer.get(i).getCbMinutos1().getSelectedItem().toString()) == 0 && Integer.parseInt(this.pPorHacer.pAPorHacer.get(i).getCbSegundos1().getSelectedItem().toString()) == 0) {
                         JOptionPane.showMessageDialog(null, "¡Debe ingresar un tiempo válido!");
-                        veri2 = false;
                     }
-                    if (!this.pPorHacer.pAPorHacer.get(i).getTfNombreActividad().getText().equals("") && !(Integer.parseInt(this.pPorHacer.pAPorHacer.get(i).getCbHora1().getSelectedItem().toString()) == 0 && Integer.parseInt(this.pPorHacer.pAPorHacer.get(i).getCbMinutos1().getSelectedItem().toString()) == 0 && Integer.parseInt(this.pPorHacer.pAPorHacer.get(i).getCbSegundos1().getSelectedItem().toString()) == 0)) {
+                    else if (!this.pPorHacer.pAPorHacer.get(i).getTfNombreActividad().getText().equals("") && !(Integer.parseInt(this.pPorHacer.pAPorHacer.get(i).getCbHora1().getSelectedItem().toString()) == 0 && Integer.parseInt(this.pPorHacer.pAPorHacer.get(i).getCbMinutos1().getSelectedItem().toString()) == 0 && Integer.parseInt(this.pPorHacer.pAPorHacer.get(i).getCbSegundos1().getSelectedItem().toString()) == 0)) {
                         this.pHaciendo.agregarActividad(new PAHaciendo(this.pPorHacer.pAPorHacer.get(i).getTfNombreActividad().getText(),
                                 this.pPorHacer.pAPorHacer.get(i).getCbHora1().getSelectedItem().toString(),
                                 this.pPorHacer.pAPorHacer.get(i).getCbMinutos1().getSelectedItem().toString(),
