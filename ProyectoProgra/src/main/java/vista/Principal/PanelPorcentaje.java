@@ -35,28 +35,33 @@ public class PanelPorcentaje extends JPanel{
         this.setLayout(distribucion);
         Border bordejpanel = new TitledBorder(new LineBorder(Color.BLACK), "");
         this.setBorder(bordejpanel);
+        this.setBackground(Color.GRAY);
         
         gbc.gridx = 0 ;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
         this.lblTareasRealizadas = new JLabel("Tareas Realizadas:");
+        this.lblTareasRealizadas.setForeground(Color.WHITE);
         this.add(this.lblTareasRealizadas,gbc);
         
         gbc.gridx = 0 ;
         gbc.gridy = 1;
         this.lblPorcenRealizacion = new JLabel("¨Porcentaje de realizacion:");
+        this.lblPorcenRealizacion.setForeground(Color.WHITE);
         this.add(this.lblPorcenRealizacion,gbc);
         
         gbc.gridwidth = 1;
         gbc.gridx = 2 ;
         gbc.gridy = 0;
         this.lblNumeroTR = new JLabel("---");
+        this.lblNumeroTR.setForeground(Color.WHITE);
         this.add(this.lblNumeroTR,gbc);
         
         
         gbc.gridx = 2 ;
         gbc.gridy = 1;
         this.lblPorcentaje = new JLabel("---%");
+        this.lblPorcentaje.setForeground(Color.WHITE);
         this.add(this.lblPorcentaje,gbc);
     }
 }

@@ -44,6 +44,8 @@ public class PanelHecho extends JPanel{
         this.setBorder(bordejpanel);
         
         this.pPorcentaje = new PanelPorcentaje();
+        this.gbc.weightx = 1.0;
+        this.gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(this.pPorcentaje,gbc);
         
         this.pAHecho = new ArrayList<>();

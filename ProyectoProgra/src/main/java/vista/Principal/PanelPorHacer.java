@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import static java.awt.GridBagConstraints.FIRST_LINE_START;
+import static java.awt.GridBagConstraints.NORTH;
 import static java.awt.GridBagConstraints.PAGE_START;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -39,11 +40,14 @@ public class PanelPorHacer extends JPanel{
         this.fondo = new ImageIcon("Utilizables\\fondo_madera.jpg").getImage();
         GridBagLayout distribucion = new GridBagLayout();
         this.gbc = new GridBagConstraints();
-        this.gbc.anchor = FIRST_LINE_START;
         this.setLayout(distribucion);
         Border bordejpanel = new TitledBorder(new LineBorder(Color.BLACK), "Por Hacer");
         this.setBorder(bordejpanel);
         this.pAPorHacer = new ArrayList<>();
+//        this.gbc.weighty = 1.0;
+        this.gbc.anchor = NORTH;
+        
+        
     }
     
     public void agregarActividad(PAPorHacer actividad){

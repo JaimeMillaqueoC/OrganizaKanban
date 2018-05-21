@@ -40,7 +40,7 @@ public class PanelPerfil extends JPanel {
     private void inicializarComponentes(){
         this.fondo = new ImageIcon("Utilizables\\fondo_madera.jpg").getImage();
         ImageIcon icono = new ImageIcon("Utilizables\\Logo.png");
-        ImageIcon foto = new ImageIcon("Utilizables\\user-icon1.jpg");
+        ImageIcon foto = new ImageIcon("Utilizables\\icono-usuario.jpg");
 
 //        int scale = 3;
 //        int width = icono.getIconWidth();
@@ -85,6 +85,7 @@ public class PanelPerfil extends JPanel {
         gbc.weighty = 10;
         gbc.anchor = PAGE_START;
         this.lblNombreUsuario = new JLabel("#NOMBRE_USUARIO");
+        this.lblNombreUsuario.setForeground(Color.WHITE);
         this.add(this.lblNombreUsuario,gbc);
         
         //agregando Botones
@@ -93,11 +94,13 @@ public class PanelPerfil extends JPanel {
 //        gbc.weightx = 10;
 //        gbc.weighty = 10;
         this.btnEditarUsuario = new JButton("Editar");
+        this.btnEditarUsuario.setBackground(Color.LIGHT_GRAY);
         this.add(this.btnEditarUsuario,gbc);
         
         gbc.gridx = 0;
         gbc.gridy = 4;
         this.btnAniadirNuevo = new JButton("Añadir Actividad (+)");
+        this.btnAniadirNuevo.setBackground(Color.LIGHT_GRAY);
         this.add(this.btnAniadirNuevo,gbc);
         
     }

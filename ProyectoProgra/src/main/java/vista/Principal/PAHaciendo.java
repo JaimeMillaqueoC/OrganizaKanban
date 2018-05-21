@@ -40,36 +40,50 @@ public class PAHaciendo extends PanelActividad{
         this.setLayout(distribucion);
         Border bordejpanel = new TitledBorder(new LineBorder(Color.BLACK), "");
         this.setBorder(bordejpanel);
+        this.setBackground(Color.GRAY);
         
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 3;
+        this.lblNombreActividad.setForeground(Color.WHITE);
         this.add(this.lblNombreActividad,gbc);
         
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 1;
+        gbc.gridheight = 3;
+        gbc.fill = GridBagConstraints.BOTH ;
+        gbc.weighty = 1.0;
+        this.lblTiempo.setForeground(Color.WHITE);
         this.add(this.lblTiempo,gbc);
         
         gbc.gridx = 1;
         gbc.gridy = 1;
-        this.lblCronometro.setText(this.hora+" H: "+this.minutos+" M: "+this.segundos+" S");
+        gbc.weighty = 1.0;
+        this.lblCronometro.setText(this.hora+" H "+this.minutos+" M "+this.segundos+" S");
+        this.lblCronometro.setForeground(Color.WHITE);
         this.add(this.lblCronometro,gbc);
+        gbc.weighty = 0;
         
+        gbc.fill=GridBagConstraints.NONE;
+        gbc.gridheight = 1;
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 4;
         this.btnFinalizar = new JButton("Finalizar");
+        this.btnFinalizar.setBackground(Color.LIGHT_GRAY);
         this.add(this.btnFinalizar,gbc);
         
         gbc.gridx = 1;
-        gbc.gridy = 2;
+        gbc.gridy = 4;
         this.btnReanudar = new JButton("Reanudar");
+        this.btnReanudar.setBackground(Color.LIGHT_GRAY);
+        this.btnReanudar.setEnabled(false);
         this.add(this.btnReanudar,gbc);
         
         gbc.gridx = 2;
-        gbc.gridy = 2;
+        gbc.gridy = 4;
         this.btnPausar = new JButton("Pausar");
-        this.btnReanudar.setEnabled(false);
+        this.btnPausar.setBackground(Color.LIGHT_GRAY);
         this.add(this.btnPausar,gbc);
     }
 }

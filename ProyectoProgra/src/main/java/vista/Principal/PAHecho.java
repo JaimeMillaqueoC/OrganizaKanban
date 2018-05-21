@@ -39,28 +39,34 @@ public class PAHecho extends PanelActividad{
         this.setLayout(distribucion);
         Border bordejpanel = new TitledBorder(new LineBorder(Color.BLACK), "");
         this.setBorder(bordejpanel);
+        this.setBackground(Color.GRAY);
         
         gbc.gridx = 0;
         gbc.gridy = 0;
+        this.lblNombreActividad.setForeground(Color.WHITE);
         this.add(this.lblNombreActividad,gbc);
         
         
         gbc.gridx = 0;
         gbc.gridy = 1;
+        this.lblTiempo.setForeground(Color.WHITE);
         this.add(this.lblTiempo,gbc);
         
         gbc.gridx = 1;
         gbc.gridy = 1;
+        this.lblCronometro.setForeground(Color.WHITE);
         this.add(this.lblCronometro,gbc);
         
         gbc.gridx = 0;
         gbc.gridy = 2;
         this.lblPorcentaje = new JLabel("Porcentaje Realizado:");
+        this.lblPorcentaje.setForeground(Color.WHITE);
         this.add(this.lblPorcentaje,gbc);
         
         gbc.gridx = 1;
         gbc.gridy = 2;
         this.lblRealizado = new JLabel("- - -%");
+        this.lblRealizado.setForeground(Color.WHITE);
         this.add(this.lblRealizado,gbc);
     }
     
