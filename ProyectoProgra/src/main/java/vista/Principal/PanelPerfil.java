@@ -6,11 +6,14 @@
 package vista.Principal;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import static java.awt.GridBagConstraints.PAGE_START;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import modelo.Usuario;
 
 /**
  *
@@ -27,81 +31,38 @@ import javax.swing.border.TitledBorder;
 public class PanelPerfil extends JPanel {
 
     private Image fondo;
-    private JLabel lblIcono;
-    private JLabel lblFotoPerfil;
-    private JLabel lblNombreUsuario;
-    public JButton btnEditarUsuario;
+    private final Usuario user;
     public JButton btnAniadirNuevo;
+    
 
-    public PanelPerfil() {
+    public PanelPerfil(Usuario user) {
+        this.user = user;
         this.inicializarComponentes();
     }
 
     private void inicializarComponentes(){
-        this.fondo = new ImageIcon("Utilizables\\fondo_madera.jpg").getImage();
-        ImageIcon icono = new ImageIcon("Utilizables\\Logo.png");
-        ImageIcon foto = new ImageIcon("Utilizables\\icono-usuario.jpg");
-
-//        int scale = 3;
-//        int width = icono.getIconWidth();
-//        int height = icono.getIconHeight();
-//        BufferedImage buffer = new BufferedImage(scale *width, scale * height, BufferedImage.TYPE_INT_ARGB);
-//        Graphics2D graphics = buffer.createGraphics();
-//        graphics.scale(scale, scale);
-//        icono.paintIcon(null, graphics, 0, 0);
-//        graphics.dispose();
-
-        GridBagLayout distribucion = new GridBagLayout();
-        GridBagConstraints gbc = new GridBagConstraints();
+        GridLayout distribucion = new GridLayout(4,1);
         this.setLayout(distribucion);
-        Border bordejpanel = new TitledBorder(new LineBorder(Color.BLACK), "Perfil");
+        javax.swing.border.Border bordejpanel = new TitledBorder(new LineBorder(Color.BLACK), "Usuario");
         this.setBorder(bordejpanel);
-
-        //Agregamos Icono
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        this.lblIcono = new JLabel();
-        this.lblIcono.setSize(200, 120);
-        Icon icon = new ImageIcon(icono.getImage().getScaledInstance(this.lblIcono.getWidth(), this.lblIcono.getHeight(), Image.SCALE_DEFAULT));
-        this.lblIcono.setIcon(icon);
-        this.repaint();
-        this.add(this.lblIcono,gbc);
         
-        //Agregamos foto de perfil
-//        gbc.weightx = 40;
-        gbc.weighty = 5;
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        this.lblFotoPerfil = new JLabel();
-        this.lblFotoPerfil.setSize(200, 200);
-        Icon foto1 = new ImageIcon(foto.getImage().getScaledInstance(this.lblFotoPerfil.getWidth(), this.lblFotoPerfil.getHeight(), Image.SCALE_DEFAULT));
-        this.lblFotoPerfil.setIcon(foto1);
-        this.add(this.lblFotoPerfil,gbc);
+        ImageIcon image = new ImageIcon(this.user.getRutaFoto());
+        image = new ImageIcon(image.getImage().getScaledInstance(100, 100, BufferedImage.SCALE_SMOOTH));
+        JLabel imagen = new JLabel(image);
+        this.add(imagen);
         
-        //Agregamos nombre de usuario
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.weightx = 10;
-        gbc.weighty = 10;
-        gbc.anchor = PAGE_START;
-        this.lblNombreUsuario = new JLabel("#NOMBRE_USUARIO");
-        this.lblNombreUsuario.setForeground(Color.WHITE);
-        this.add(this.lblNombreUsuario,gbc);
+        JPanel panelDatos = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JLabel nombre = new JLabel(this.user.getPrimerNombre()+" "+this.user.getApellidoMaterno()+" "+this.user.getApellitoPaterno());
+        panelDatos.add(nombre);
+        JLabel universidad = new JLabel(this.user.getUniversidad());
+        panelDatos.add(universidad);
+        this.add(panelDatos);
         
-        //agregando Botones
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-//        gbc.weightx = 10;
-//        gbc.weighty = 10;
-        this.btnEditarUsuario = new JButton("Editar");
-        this.btnEditarUsuario.setBackground(Color.LIGHT_GRAY);
-        this.add(this.btnEditarUsuario,gbc);
-        
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        this.btnAniadirNuevo = new JButton("Añadir Actividad (+)");
-        this.btnAniadirNuevo.setBackground(Color.LIGHT_GRAY);
-        this.add(this.btnAniadirNuevo,gbc);
+        this.btnAniadirNuevo = new JButton("Añadir Actividad");
+        this.btnAniadirNuevo.setBackground(Color.LIGHT_GRAY);     
+        JPanel panelBoton = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panelBoton.add(this.btnAniadirNuevo);
+        this.add(panelBoton);  
         
     }
 

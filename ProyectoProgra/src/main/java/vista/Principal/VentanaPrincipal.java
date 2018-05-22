@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import modelo.Usuario;
 import vista.EditarPerfil.VentanaEditarUsuario;
 
 /**
@@ -18,12 +19,14 @@ import vista.EditarPerfil.VentanaEditarUsuario;
  * @author Jaime
  */
 public class VentanaPrincipal extends JFrame implements ActionListener {
-
+    private BarraMenu barraSuperior;
     private PanelPerfil pPerfil;
     private PanelPorHacer pPorHacer;
     private PanelHaciendo pHaciendo;
     private PanelHecho pHecho;
     private VentanaEditarUsuario vEditarU;
+    private VentanaAgregarActividad ventanaAgregarActividad;
+    private Usuario usuario;
     private boolean abierto;
     private int posY;
 
@@ -33,16 +36,23 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
     }
 
     private void inicializarComponentes() {
+        this.usuario = new Usuario();
         GridLayout distribucion = new GridLayout(1, 4);
         this.setLayout(distribucion);
+        
+        this.barraSuperior = new BarraMenu();
+        this.setJMenuBar(barraSuperior);
+        this.barraSuperior.editarPerfil.addActionListener(this);
+        
+        
 
+        
         this.abierto = false;
         this.posY = 0;
 
-        this.pPerfil = new PanelPerfil();
+        this.pPerfil = new PanelPerfil(this.usuario);
         this.add(this.pPerfil);
         this.pPerfil.btnAniadirNuevo.addActionListener(this);
-        this.pPerfil.btnEditarUsuario.addActionListener(this);
 
         this.pPorHacer = new PanelPorHacer();
         this.add(this.pPorHacer);
@@ -62,6 +72,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 
         this.setMinimumSize(d);
         this.setVisible(true);
+        
+        
+
 
     }
 
@@ -69,15 +82,14 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         //Botones PanelPerfil
         if (this.pPerfil.btnAniadirNuevo == e.getSource()) {
-            this.pPorHacer.agregarActividad(new PAPorHacer());
-            this.pPorHacer.updateUI();
+            this.ventanaAgregarActividad = new VentanaAgregarActividad();
+            this.abierto = true;
+            //this.pPorHacer.agregarActividad(new PAPorHacer());
+            //this.pPorHacer.updateUI();
         }
-        if (this.pPerfil.btnEditarUsuario == e.getSource()) {
-//            if (!this.abierto) {
+        if (this.barraSuperior.editarPerfil == e.getSource()) {
             this.vEditarU = new VentanaEditarUsuario();
             this.abierto = true;
-//            }
-
         }
         //Botones PanelPorHacer
         

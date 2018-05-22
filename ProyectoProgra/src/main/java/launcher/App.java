@@ -6,6 +6,7 @@
 package launcher;
 
 import vista.Bienvenida.VentanaBienvenida;
+import vista.Principal.VentanaAgregarActividad;
 
 
 /**
