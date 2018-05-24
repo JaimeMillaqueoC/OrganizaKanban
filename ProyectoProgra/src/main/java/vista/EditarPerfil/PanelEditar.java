@@ -18,9 +18,11 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import vista.Principal.VentanaPrincipal;
 
 /**
  *
@@ -29,11 +31,13 @@ import javax.swing.JTextField;
 public class PanelEditar extends JPanel implements ActionListener{
     private ImageIcon imPerfil;
     private JLabel lblPerfil, lblNombre, lblApellido, lblInsitucion;
-    private JTextField tfNombre, tfApellido, tfInstitucion;
-    private String ruta;
+    public JTextField tfNombre, tfApellido, tfInstitucion;
     private JButton btnCambiarF, btnCancelar, btnGuardar;
-    private final String rutaDefecto = "Utilizables\\fotoUser.png";
-    public PanelEditar() {
+    public String ruta = "Utilizables\\fotoUser.png";
+    private VentanaPrincipal vp;
+    
+    public PanelEditar(VentanaPrincipal vp) {
+        this.vp = vp;
         this.inicializarComponentes();
     }
     
@@ -45,7 +49,7 @@ public class PanelEditar extends JPanel implements ActionListener{
         
         c.gridwidth = 4;
         c.weighty = 1.0;
-        this.imPerfil = new ImageIcon(this.rutaDefecto);
+        this.imPerfil = new ImageIcon(this.ruta);
         this.lblPerfil = new JLabel();
         this.lblPerfil.setSize(200, 200);
         Icon icon = new ImageIcon(this.imPerfil.getImage().getScaledInstance(this.lblPerfil.getWidth(), this.lblPerfil.getHeight(), Image.SCALE_DEFAULT));
@@ -98,12 +102,14 @@ public class PanelEditar extends JPanel implements ActionListener{
         c.gridx = 0;
         c.gridwidth = 2;
         this.btnCancelar = new JButton("Cancelar");
+        this.btnCancelar.addActionListener(this);
         this.btnCancelar.setBackground(Color.LIGHT_GRAY);
         this.add(this.btnCancelar,c);
         
         c.gridy = 5;
         c.gridx = 2;
         this.btnGuardar = new JButton("Guardar Cambios");
+        this.btnGuardar.addActionListener(this);
         this.btnGuardar.setBackground(Color.LIGHT_GRAY);
         this.add(this.btnGuardar,c);
         
@@ -116,7 +122,7 @@ public class PanelEditar extends JPanel implements ActionListener{
         jf.showOpenDialog(this);
         File archivo = jf.getSelectedFile();
         if (archivo != null) {
-            this.ruta = archivo.getAbsolutePath();
+            this.ruta =  archivo.getAbsolutePath();
             this.imPerfil = new ImageIcon(this.ruta);
             Icon icon = new ImageIcon(this.imPerfil.getImage().getScaledInstance(this.lblPerfil.getWidth(), this.lblPerfil.getHeight(), Image.SCALE_DEFAULT));
             this.lblPerfil.setIcon(icon);
@@ -124,10 +130,27 @@ public class PanelEditar extends JPanel implements ActionListener{
         }
     }
 
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public JButton getBtnGuardar() {
+        return btnGuardar;
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         if (this.btnCambiarF == e.getSource()) {
             this.abrirActionPerformed();
+        }
+        if (this.btnGuardar == e.getSource()) {
+            this.vp.usuario.setRutaFoto(this.ruta);
+            this.vp.usuario.setPrimerNombre(this.tfNombre.getText());
+            this.vp.usuario.setApellidoMaterno(this.tfApellido.getText());
+            this.vp.usuario.setUniversidad(this.tfInstitucion.getText());
+            this.vp.pPerfil.updateUI();
+            System.out.println("wena");
+//            this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         }
     }
 }

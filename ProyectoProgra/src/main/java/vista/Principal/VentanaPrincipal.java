@@ -23,19 +23,19 @@ import vista.Estadisticas.VentanaOtrasEstadisticas;
  * @author Jaime
  */
 public class VentanaPrincipal extends JFrame implements ActionListener {
+
     private BarraMenu barraSuperior;
-    private Perfil pPerfil;
-    private Usuario usuario;
+    public Perfil pPerfil;
+    public Usuario usuario;
     private boolean abierto;
-    
-    private Panel paneluno,paneldos,paneltres;
+
+    private Panel paneluno, paneldos, paneltres;
     private GestionarActividades gestor;
     private Actividad actividad;
     private VentanaAgregarActividad ventanaAgregarActividad;
     private VentanaEstadisticasTareas estadisticas;
     private VentanaOtrasEstadisticas otrasEstadisticas;
     private VentanaEditarUsuario vEditarU;
-
 
     public VentanaPrincipal() {
         this.venatanas();
@@ -44,28 +44,28 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
         this.inicializarComponentes();
         this.gestorActividades();
     }
-    
-    private void venatanas(){
+
+    private void venatanas() {
         this.ventanaAgregarActividad = new VentanaAgregarActividad();
     }
-    
+
     private void iniciarPaneles() {
         this.usuario = new Usuario();
         this.barraSuperior = new BarraMenu();
         this.pPerfil = new Perfil(this.usuario);
-        
-        this.paneluno = new Panel("Por Hacer",10);
-        this.paneldos = new Panel("Haciendo",10);
-        this.paneltres = new Panel("hecho",10);
-        
+
+        this.paneluno = new Panel("Por Hacer", 10);
+        this.paneldos = new Panel("Haciendo", 10);
+        this.paneltres = new Panel("hecho", 10);
+
         this.setJMenuBar(barraSuperior);
-        
+
         this.add(this.pPerfil);
         this.add(this.paneluno);
         this.add(this.paneldos);
         this.add(this.paneltres);
     }
-    
+
     private void acciones() {
         this.barraSuperior.editarPerfil.addActionListener(this);
         this.barraSuperior.otrosDatos.addActionListener(this);
@@ -73,7 +73,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
         this.pPerfil.btnAniadirNuevo.addActionListener(this);
         this.ventanaAgregarActividad.botonAceptar.addActionListener(this);
     }
-    
+
     private void inicializarComponentes() {
         GridLayout distribucion = new GridLayout(1, 4);
         this.setLayout(distribucion);
@@ -87,14 +87,14 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 
         this.setMinimumSize(d);
         this.setVisible(true);
-        
+
         this.abierto = false;
     }
-    
-    private void gestorActividades(){
-        this.gestor = new GestionarActividades(paneluno,paneldos,paneltres);
+
+    private void gestorActividades() {
+        this.gestor = new GestionarActividades(paneluno, paneldos, paneltres);
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         //Botones PanelPerfil
@@ -102,14 +102,14 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
             if (this.ventanaAgregarActividad != null) {
                 this.ventanaAgregarActividad.dispose();
             }
-            this.ventanaAgregarActividad.setVisible(true);            
+            this.ventanaAgregarActividad.setVisible(true);
         }
         //Botones Barra superior
         if (this.barraSuperior.editarPerfil == e.getSource()) {
             if (this.vEditarU != null) {
                 this.vEditarU.dispose();
             }
-            this.vEditarU = new VentanaEditarUsuario();
+            this.vEditarU = new VentanaEditarUsuario(this);
             this.vEditarU.setVisible(true);
         }
         if (this.barraSuperior.datosTarea == e.getSource()) {
@@ -126,17 +126,19 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
             this.otrasEstadisticas = new VentanaOtrasEstadisticas();
             this.otrasEstadisticas.setVisible(true);
         }
-        
+
         //Botonoes Ventana Agregar Actividad
-        if(this.ventanaAgregarActividad.botonAceptar == e.getSource()){
+        if (this.ventanaAgregarActividad.botonAceptar == e.getSource()) {
             this.ventanaAgregarActividad.extraerDatos();
             String nombreTemporal = this.ventanaAgregarActividad.getNombre();
             String tiempoTemporal = this.ventanaAgregarActividad.getTiempo();
-            this.actividad = new Actividad(nombreTemporal,tiempoTemporal);
+            this.actividad = new Actividad(nombreTemporal, tiempoTemporal);
             this.gestor.agregarActividad(actividad);
             this.paneluno = this.gestor.agregarActividadPanelPorHacer();
             this.paneluno.updateUI();
             this.ventanaAgregarActividad.dispose();
         }
-     }
+
+        
+    }
 }

@@ -6,6 +6,7 @@
 package vista.EditarPerfil;
 
 import javax.swing.JFrame;
+import vista.Principal.VentanaPrincipal;
 
 
 /**
@@ -14,17 +15,16 @@ import javax.swing.JFrame;
  */
 public class VentanaEditarUsuario extends JFrame{
     
-    public boolean abierto;
     private PanelEditar pEditar;
-    
-    public VentanaEditarUsuario() {
-        this.abierto = true;
+    private VentanaPrincipal vp;
+    public VentanaEditarUsuario(VentanaPrincipal vp) {
+        this.vp = vp;
         this.inicializarComponentes();
     }
     
     private void inicializarComponentes(){
         
-        this.pEditar = new PanelEditar();
+        this.pEditar = new PanelEditar(this.vp);
         this.add(this.pEditar);
         
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -34,4 +34,10 @@ public class VentanaEditarUsuario extends JFrame{
         this.setResizable(false);
         this.setVisible(true);
     }
+
+    public PanelEditar getpEditar() {
+        return pEditar;
+    }
+    
+    
 }
