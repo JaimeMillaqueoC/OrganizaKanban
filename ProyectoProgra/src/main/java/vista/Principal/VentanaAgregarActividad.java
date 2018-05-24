@@ -23,9 +23,10 @@ import javax.swing.JTextField;
 public class VentanaAgregarActividad extends JFrame{
     
     private JPanel panelDatos, panelBoton;
-    public JButton botonAceptar;
-    private JLabel nombreActividad, duracionMinutosActividad, descripcionActividiad;
+    public JButton botonAceptar, botonCancelar;
+    private JLabel nombreActividad, duracionMinutosActividad;
     private JTextField areaNombreActividad,areaDuracionMinutos,areadDescripcionActividad;
+    private String nombre, tiempo;
 
     public VentanaAgregarActividad() {
         inicializar();
@@ -38,13 +39,13 @@ public class VentanaAgregarActividad extends JFrame{
         this.panelBoton = new JPanel();
         this.panelDatos = new JPanel();
         this.panelDatos.setLayout(new FlowLayout());
+        this.panelBoton.setSize(50, 350);
 
         
         this.nombreActividad = new JLabel("Actividad:    ");
         this.duracionMinutosActividad = new JLabel("Minutos:      ");
-        this.descripcionActividiad = new JLabel("Descripcion: ");
-        this.areaNombreActividad = new JTextField(20);
-        this.areaDuracionMinutos = new JTextField(20);
+        this.areaNombreActividad = new JTextField(21);
+        this.areaDuracionMinutos = new JTextField(21);
         this.areadDescripcionActividad = new JTextField(20);
         
         this.panelDatos.add(this.nombreActividad);
@@ -52,22 +53,33 @@ public class VentanaAgregarActividad extends JFrame{
         
         this.panelDatos.add(this.duracionMinutosActividad);
         this.panelDatos.add(this.areaDuracionMinutos);
-        
-        this.panelDatos.add(this.descripcionActividiad);
-        this.panelDatos.add(this.areadDescripcionActividad);
-        
+                
         this.botonAceptar = new JButton("Aceptar");
+        this.botonCancelar = new JButton("Cancelar");
         this.panelBoton.add(this.add(this.botonAceptar));
+        this.panelBoton.add(this.add(this.botonCancelar));
         this.add(this.panelDatos);
         this.add(this.panelBoton);
         
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setTitle("Editar");
-        this.setSize(400, 200);
+        this.setSize(350, 200);
         this.setLocationRelativeTo(null);
-        this.setVisible(true);
+        this.setResizable(false);
     }
     
+    public void extraerDatos() {
+        this.nombre = areaNombreActividad.getText();
+        this.tiempo = areaDuracionMinutos.getText();
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getTiempo() {
+        return tiempo;
+    }
     
     
 }

@@ -17,60 +17,39 @@ import javax.swing.JPanel;
 public class Actividad extends JPanel {
     
     private String nombre;
-    private Double duracion;
-    private String descripcion;
+    private String duracion;
     
-    private JLabel name, description, duration;
+    private JLabel name, duration;
     
-
     public Actividad() {
-        incializar();
+    
     }
 
-    public Actividad(String nombre, Double duracion, String Descripcion) {
+    public Actividad(String nombre, String duracion) {
         this.nombre = nombre;
         this.duracion = duracion;
-        this.descripcion = Descripcion;
         agregarDatos();
     }
     
     private void incializar() {
-        this.setBackground(Color.blue);
+        this.setBackground(Color.gray);
     }
 
     private void agregarDatos() {
         this.name = new JLabel(nombre);
-        this.description = new JLabel(descripcion);
-        this.duration = new JLabel(duracion.toString());
+        this.duration = new JLabel(duracion);
         GridLayout distribucion = new GridLayout(3,1);
         this.setLayout(distribucion);
         this.add(name);
-        this.add(description);
         this.add(duration);
         this.setBackground(Color.red);
     }
-    
+
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Double getDuracion() {
+    public String getDuracion() {
         return duracion;
-    }
-
-    public void setDuracion(Double duracion) {
-        this.duracion = duracion;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String Descripcion) {
-        this.descripcion = Descripcion;
     }    
 }
