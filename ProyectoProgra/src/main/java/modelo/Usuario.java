@@ -18,10 +18,10 @@ public class Usuario {
     private String rutaFoto;
     
     public Usuario() {
-        this.primerNombre = "Nicola";
-        this.apellidoMaterno = "Divari";
-        this.apellitoPaterno = "Spercon";
-        this.universidad = "Universidad de Bolonia";
+        this.primerNombre = "NombreUsuario";
+        this.apellidoMaterno = "Apellido";
+        this.apellitoPaterno = "Apellido";
+        this.universidad = "Universidad  XX";
         this.rutaFoto = "Utilizables/fotoUser.png";
     }
 

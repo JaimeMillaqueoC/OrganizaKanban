@@ -166,6 +166,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
             this.paneluno.getListaPaneles().get(this.paneluno.getListaPaneles().size()-1).addMouseListener(this);
             this.paneluno.updateUI();
             this.ventanaAgregarActividad.dispose();
+            System.out.println(this.paneluno.getListaPaneles());
         }
         
      }

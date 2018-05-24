@@ -6,7 +6,8 @@
 package launcher;
 
 import vista.Bienvenida.VentanaBienvenida;
-import vista.EditarPerfil.VentanaEditarUsuario;
+import vista.Estadisticas.VentanaEstadisticasTareas;
+import vista.Estadisticas.VentanaOtrasEstadisticas;
 import vista.Principal.VentanaAgregarActividad;
 
 
@@ -20,8 +21,9 @@ public class App {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        VentanaBienvenida vb = new VentanaBienvenida();
-//        VentanaEditarUsuario v = new VentanaEditarUsuario();
+        //VentanaOtrasEstadisticas a = new VentanaOtrasEstadisticas();
+        //VentanaEstadisticasTareas ds = new VentanaEstadisticasTareas();
+        VentanaBienvenida vB = new VentanaBienvenida();
     }
     
 }
