@@ -149,7 +149,6 @@ public class PanelEditar extends JPanel implements ActionListener{
             this.vp.usuario.setApellidoMaterno(this.tfApellido.getText());
             this.vp.usuario.setUniversidad(this.tfInstitucion.getText());
             this.vp.pPerfil.updateUI();
-            System.out.println("wena");
 //            this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         }
     }
