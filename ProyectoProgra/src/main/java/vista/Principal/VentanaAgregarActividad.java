@@ -24,8 +24,8 @@ public class VentanaAgregarActividad extends JFrame{
     
     private JPanel panelDatos, panelBoton;
     public JButton botonAceptar, botonCancelar;
-    private JLabel nombreActividad, duracionMinutosActividad;
-    private JTextField areaNombreActividad,areaDuracionMinutos,areadDescripcionActividad;
+    private JLabel nombreActividad;
+    private JTextField areaNombreActividad;
     private String nombre, tiempo;
 
     public VentanaAgregarActividad() {
@@ -40,20 +40,13 @@ public class VentanaAgregarActividad extends JFrame{
         this.panelDatos = new JPanel();
         this.panelDatos.setLayout(new FlowLayout());
         this.panelBoton.setSize(50, 350);
-
         
         this.nombreActividad = new JLabel("Actividad:    ");
-        this.duracionMinutosActividad = new JLabel("Minutos:      ");
         this.areaNombreActividad = new JTextField(21);
-        this.areaDuracionMinutos = new JTextField(21);
-        this.areadDescripcionActividad = new JTextField(20);
         
         this.panelDatos.add(this.nombreActividad);
         this.panelDatos.add(this.areaNombreActividad);
         
-        this.panelDatos.add(this.duracionMinutosActividad);
-        this.panelDatos.add(this.areaDuracionMinutos);
-                
         this.botonAceptar = new JButton("Aceptar");
         this.botonCancelar = new JButton("Cancelar");
         this.panelBoton.add(this.add(this.botonAceptar));
@@ -70,7 +63,6 @@ public class VentanaAgregarActividad extends JFrame{
     
     public void extraerDatos() {
         this.nombre = areaNombreActividad.getText();
-        this.tiempo = areaDuracionMinutos.getText();
     }
 
     public String getNombre() {

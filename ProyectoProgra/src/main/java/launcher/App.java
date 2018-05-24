@@ -6,6 +6,8 @@
 package launcher;
 
 import vista.Bienvenida.VentanaBienvenida;
+import vista.Estadisticas.VentanaEstadisticasTareas;
+import vista.Estadisticas.VentanaOtrasEstadisticas;
 import vista.Principal.VentanaAgregarActividad;
 
 
@@ -19,6 +21,8 @@ public class App {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        //VentanaOtrasEstadisticas a = new VentanaOtrasEstadisticas();
+        //VentanaEstadisticasTareas ds = new VentanaEstadisticasTareas();
         VentanaBienvenida vB = new VentanaBienvenida();
     }
     

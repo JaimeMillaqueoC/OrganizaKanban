@@ -35,6 +35,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
     private VentanaEstadisticasTareas estadisticas;
     private VentanaOtrasEstadisticas otrasEstadisticas;
     private VentanaEditarUsuario vEditarU;
+    
+    private final int cantidadPanelesActividad = 10;
 
 
     public VentanaPrincipal() {
@@ -54,9 +56,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
         this.barraSuperior = new BarraMenu();
         this.pPerfil = new Perfil(this.usuario);
         
-        this.paneluno = new Panel("Por Hacer",10);
-        this.paneldos = new Panel("Haciendo",10);
-        this.paneltres = new Panel("hecho",10);
+        this.paneluno = new Panel("Por Hacer",cantidadPanelesActividad);
+        this.paneldos = new Panel("Haciendo",cantidadPanelesActividad);
+        this.paneltres = new Panel("hecho",cantidadPanelesActividad);
         
         this.setJMenuBar(barraSuperior);
         
