@@ -7,9 +7,11 @@ package vista.Principal;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import modelo.Actividad;
 
 /**
  *
@@ -19,8 +21,10 @@ public class Panel extends JPanel{
     
     private String tituloPanel;
     private int cantidadTareas;
+    private ArrayList<Actividad> listaActividades;
     
     public Panel(String titulo, int cantidadTareas) {
+        this.listaActividades = new ArrayList<>();
         this.cantidadTareas = cantidadTareas;
         this.tituloPanel = titulo;
         iniciarComponentes();
@@ -31,5 +35,13 @@ public class Panel extends JPanel{
         this.setLayout(distribucion);
         javax.swing.border.Border bordejpanel = new TitledBorder(new LineBorder(Color.BLACK), tituloPanel);
         this.setBorder(bordejpanel);
+    }
+    
+    public void agregarLista(Actividad actividad){
+        this.listaActividades.add(actividad);
+    }
+
+    public ArrayList<Actividad> getListaPaneles() {
+        return listaActividades;
     }
 }

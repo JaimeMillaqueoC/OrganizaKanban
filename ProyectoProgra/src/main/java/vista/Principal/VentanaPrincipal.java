@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 import modelo.Actividad;
 import modelo.GestionarActividades;
 import modelo.Usuario;
+import vista.Ayuda.VentanaContacto;
+import vista.Ayuda.VentanaInformaciones;
 import vista.EditarPerfil.VentanaEditarUsuario;
 import vista.Estadisticas.VentanaEstadisticasTareas;
 import vista.Estadisticas.VentanaOtrasEstadisticas;
@@ -35,6 +37,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
     private VentanaEstadisticasTareas estadisticas;
     private VentanaOtrasEstadisticas otrasEstadisticas;
     private VentanaEditarUsuario vEditarU;
+    private VentanaContacto contacto;
+    private VentanaInformaciones informaciones;
     
     private final int cantidadPanelesActividad = 10;
 
@@ -49,6 +53,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
     
     private void venatanas(){
         this.ventanaAgregarActividad = new VentanaAgregarActividad();
+        
     }
     
     private void iniciarPaneles() {
@@ -72,6 +77,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
         this.barraSuperior.editarPerfil.addActionListener(this);
         this.barraSuperior.otrosDatos.addActionListener(this);
         this.barraSuperior.datosTarea.addActionListener(this);
+        this.barraSuperior.contacto.addActionListener(this);
+        this.barraSuperior.informacion.addActionListener(this);
+        this.barraSuperior.guardar.addActionListener(this);
+        this.barraSuperior.salir.addActionListener(this);
         this.pPerfil.btnAniadirNuevo.addActionListener(this);
         this.ventanaAgregarActividad.botonAceptar.addActionListener(this);
     }
@@ -84,13 +93,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
         this.setResizable(false);
         this.setSize(1000, 600);
         this.setLocationRelativeTo(null);
-
-        Dimension d = new Dimension(this.getWidth(), this.getHeight());
-
-        this.setMinimumSize(d);
         this.setVisible(true);
-        
-        this.abierto = false;
     }
     
     private void gestorActividades(){
@@ -128,6 +131,26 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
             this.otrasEstadisticas = new VentanaOtrasEstadisticas();
             this.otrasEstadisticas.setVisible(true);
         }
+        if (this.barraSuperior.contacto == e.getSource()) {
+            if (this.contacto != null) {
+                this.contacto.dispose();
+            }
+            this.contacto = new VentanaContacto();
+            this.contacto.setVisible(true);
+        }
+        if (this.barraSuperior.informacion == e.getSource()) {
+            if (this.informaciones != null) {
+                this.informaciones.dispose();
+            }
+            this.informaciones = new VentanaInformaciones();
+            this.informaciones.setVisible(true);
+        }
+        if (this.barraSuperior.salir == e.getSource()) {
+            System.exit(0);
+        }
+        if (this.barraSuperior.guardar == e.getSource()) {
+            System.out.println("Guardado");
+        }
         
         //Botonoes Ventana Agregar Actividad
         if(this.ventanaAgregarActividad.botonAceptar == e.getSource()){
@@ -137,8 +160,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
             this.actividad = new Actividad(nombreTemporal,tiempoTemporal);
             this.gestor.agregarActividad(actividad);
             this.paneluno = this.gestor.agregarActividadPanelPorHacer();
+            this.paneluno.agregarLista(this.actividad);
             this.paneluno.updateUI();
             this.ventanaAgregarActividad.dispose();
+            System.out.println(this.paneluno.getListaPaneles());
         }
      }
 }
