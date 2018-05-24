@@ -5,6 +5,8 @@
  */
 package vista.EditarPerfil;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import vista.Principal.VentanaPrincipal;
 
@@ -13,7 +15,7 @@ import vista.Principal.VentanaPrincipal;
  *
  * @author Jaime
  */
-public class VentanaEditarUsuario extends JFrame{
+public class VentanaEditarUsuario extends JFrame implements ActionListener{
     
     private PanelEditar pEditar;
     private VentanaPrincipal vp;
@@ -25,6 +27,8 @@ public class VentanaEditarUsuario extends JFrame{
     private void inicializarComponentes(){
         
         this.pEditar = new PanelEditar(this.vp);
+        this.pEditar.getBtnCancelar().addActionListener(this);
+        this.pEditar.getBtnGuardar().addActionListener(this);
         this.add(this.pEditar);
         
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -37,6 +41,21 @@ public class VentanaEditarUsuario extends JFrame{
 
     public PanelEditar getpEditar() {
         return pEditar;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (this.pEditar.getBtnCancelar() == e.getSource()) {
+            this.setVisible(false);
+        }
+        if (this.pEditar.getBtnGuardar() == e.getSource()) {
+            this.vp.usuario.setRutaFoto(this.pEditar.ruta);
+            this.vp.usuario.setPrimerNombre(this.pEditar.tfNombre.getText());
+            this.vp.usuario.setApellidoMaterno(this.pEditar.tfApellido.getText());
+            this.vp.usuario.setUniversidad(this.pEditar.tfInstitucion.getText());
+            this.vp.pPerfil.updateUI();
+            this.setVisible(false);
+        }
     }
     
     

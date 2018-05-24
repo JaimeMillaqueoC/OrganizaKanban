@@ -102,14 +102,12 @@ public class PanelEditar extends JPanel implements ActionListener{
         c.gridx = 0;
         c.gridwidth = 2;
         this.btnCancelar = new JButton("Cancelar");
-        this.btnCancelar.addActionListener(this);
         this.btnCancelar.setBackground(Color.LIGHT_GRAY);
         this.add(this.btnCancelar,c);
         
         c.gridy = 5;
         c.gridx = 2;
         this.btnGuardar = new JButton("Guardar Cambios");
-        this.btnGuardar.addActionListener(this);
         this.btnGuardar.setBackground(Color.LIGHT_GRAY);
         this.add(this.btnGuardar,c);
         
@@ -142,14 +140,6 @@ public class PanelEditar extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (this.btnCambiarF == e.getSource()) {
             this.abrirActionPerformed();
-        }
-        if (this.btnGuardar == e.getSource()) {
-            this.vp.usuario.setRutaFoto(this.ruta);
-            this.vp.usuario.setPrimerNombre(this.tfNombre.getText());
-            this.vp.usuario.setApellidoMaterno(this.tfApellido.getText());
-            this.vp.usuario.setUniversidad(this.tfInstitucion.getText());
-            this.vp.pPerfil.updateUI();
-//            this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         }
     }
 }
