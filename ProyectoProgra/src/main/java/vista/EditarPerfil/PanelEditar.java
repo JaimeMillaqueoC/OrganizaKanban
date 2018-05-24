@@ -32,7 +32,7 @@ public class PanelEditar extends JPanel implements ActionListener{
     private JTextField tfNombre, tfApellido, tfInstitucion;
     private String ruta;
     private JButton btnCambiarF, btnCancelar, btnGuardar;
-    private final String rutaDefecto = "Utilizables\\icono-usuario.jpg";
+    private final String rutaDefecto = "Utilizables\\fotoUser.png";
     public PanelEditar() {
         this.inicializarComponentes();
     }
@@ -44,21 +44,21 @@ public class PanelEditar extends JPanel implements ActionListener{
         this.setBackground(Color.WHITE);
         
         c.gridwidth = 4;
-//        c.fill = GridBagConstraints.BOTH;
         c.weighty = 1.0;
         this.imPerfil = new ImageIcon(this.rutaDefecto);
         this.lblPerfil = new JLabel();
-        this.lblPerfil.setSize(200, 120);
+        this.lblPerfil.setSize(200, 200);
         Icon icon = new ImageIcon(this.imPerfil.getImage().getScaledInstance(this.lblPerfil.getWidth(), this.lblPerfil.getHeight(), Image.SCALE_DEFAULT));
         this.lblPerfil.setIcon(icon);
         this.add(this.lblPerfil,c);
         
         c.gridy = 1;
-        c.fill = GridBagConstraints.NONE;
+        c.weighty = 0.0;
         this.btnCambiarF = new JButton("Cambiar Imagen de Perfil");
         this.btnCambiarF.addActionListener(this);
         this.btnCambiarF.setBackground(Color.LIGHT_GRAY);
         this.add(this.btnCambiarF,c);
+        c.weighty = 1.0;
         
         c.gridy = 2;
         c.gridwidth = 2;
@@ -77,16 +77,19 @@ public class PanelEditar extends JPanel implements ActionListener{
         c.gridx = 2;
         c.gridy = 2;
         c.gridwidth = 1;
-        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.CENTER;
         this.tfNombre = new JTextField();
+        this.tfNombre.setPreferredSize(new Dimension(200, 25));
         this.add(this.tfNombre,c);
         
         c.gridy = 3;
         this.tfApellido = new JTextField();
+        this.tfApellido.setPreferredSize(new Dimension(200, 25));
         this.add(this.tfApellido,c);
         
         c.gridy = 4;
         this.tfInstitucion = new JTextField();
+        this.tfInstitucion.setPreferredSize(new Dimension(200, 25));
         this.add(this.tfInstitucion,c);
         c.fill = GridBagConstraints.NONE;
         c.weightx = 0.0;
@@ -95,12 +98,16 @@ public class PanelEditar extends JPanel implements ActionListener{
         c.gridx = 0;
         c.gridwidth = 2;
         this.btnCancelar = new JButton("Cancelar");
+        this.btnCancelar.setBackground(Color.LIGHT_GRAY);
         this.add(this.btnCancelar,c);
         
         c.gridy = 5;
         c.gridx = 2;
         this.btnGuardar = new JButton("Guardar Cambios");
+        this.btnGuardar.setBackground(Color.LIGHT_GRAY);
         this.add(this.btnGuardar,c);
+        
+        
         
         
     }

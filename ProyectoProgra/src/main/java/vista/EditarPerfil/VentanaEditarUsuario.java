@@ -31,6 +31,7 @@ public class VentanaEditarUsuario extends JFrame{
         this.setTitle("Editar");
         this.setSize(500, 600);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
         this.setVisible(true);
     }
 }
