@@ -9,6 +9,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 /**
  *
@@ -35,14 +37,9 @@ public class Actividad extends JPanel {
         this.setBackground(Color.gray);
     }
 
-    private void agregarDatos() {
-        this.name = new JLabel(nombre);
-        this.duration = new JLabel(duracion);
-        GridLayout distribucion = new GridLayout(3,1);
-        this.setLayout(distribucion);
-        this.add(name);
-        this.add(duration);
-        this.setBackground(Color.red);
+    private void agregarDatos() {       
+        javax.swing.border.Border bordejpanel = new TitledBorder(new LineBorder(Color.BLACK), this.nombre);
+        this.setBorder(bordejpanel);
     }
 
     public String getNombre() {

@@ -16,6 +16,7 @@ public class VentanaEditarUsuario extends JFrame{
     
     public boolean abierto;
     private PanelEditar pEditar;
+    
     public VentanaEditarUsuario() {
         this.abierto = true;
         this.inicializarComponentes();

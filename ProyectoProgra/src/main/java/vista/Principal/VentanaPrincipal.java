@@ -15,6 +15,8 @@ import modelo.Actividad;
 import modelo.GestionarActividades;
 import modelo.Usuario;
 import vista.EditarPerfil.VentanaEditarUsuario;
+import vista.Estadisticas.VentanaEstadisticasTareas;
+import vista.Estadisticas.VentanaOtrasEstadisticas;
 
 /**
  *
@@ -23,7 +25,6 @@ import vista.EditarPerfil.VentanaEditarUsuario;
 public class VentanaPrincipal extends JFrame implements ActionListener {
     private BarraMenu barraSuperior;
     private Perfil pPerfil;
-    private VentanaEditarUsuario vEditarU;
     private Usuario usuario;
     private boolean abierto;
     
@@ -31,6 +32,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
     private GestionarActividades gestor;
     private Actividad actividad;
     private VentanaAgregarActividad ventanaAgregarActividad;
+    private VentanaEstadisticasTareas estadisticas;
+    private VentanaOtrasEstadisticas otrasEstadisticas;
+    private VentanaEditarUsuario vEditarU;
+
 
     public VentanaPrincipal() {
         this.venatanas();
@@ -63,6 +68,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
     
     private void acciones() {
         this.barraSuperior.editarPerfil.addActionListener(this);
+        this.barraSuperior.otrosDatos.addActionListener(this);
+        this.barraSuperior.datosTarea.addActionListener(this);
         this.pPerfil.btnAniadirNuevo.addActionListener(this);
         this.ventanaAgregarActividad.botonAceptar.addActionListener(this);
     }
@@ -92,13 +99,32 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         //Botones PanelPerfil
         if (this.pPerfil.btnAniadirNuevo == e.getSource()) {
-            this.ventanaAgregarActividad.setVisible(true);
+            if (this.ventanaAgregarActividad != null) {
+                this.ventanaAgregarActividad.dispose();
+            }
+            this.ventanaAgregarActividad.setVisible(true);            
         }
-        
         //Botones Barra superior
         if (this.barraSuperior.editarPerfil == e.getSource()) {
+            if (this.vEditarU != null) {
+                this.vEditarU.dispose();
+            }
             this.vEditarU = new VentanaEditarUsuario();
-            this.abierto = true;
+            this.vEditarU.setVisible(true);
+        }
+        if (this.barraSuperior.datosTarea == e.getSource()) {
+            if (this.estadisticas != null) {
+                this.estadisticas.dispose();
+            }
+            this.estadisticas = new VentanaEstadisticasTareas();
+            this.estadisticas.setVisible(true);
+        }
+        if (this.barraSuperior.otrosDatos == e.getSource()) {
+            if (this.otrasEstadisticas != null) {
+                this.otrasEstadisticas.dispose();
+            }
+            this.otrasEstadisticas = new VentanaOtrasEstadisticas();
+            this.otrasEstadisticas.setVisible(true);
         }
         
         //Botonoes Ventana Agregar Actividad
