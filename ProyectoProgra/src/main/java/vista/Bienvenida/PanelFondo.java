@@ -23,7 +23,7 @@ public class PanelFondo extends JPanel{
     }
     
     private void inicializarComponentes(){
-        this.fondo = new ImageIcon("Utilizables/bienvenido.jpg").getImage();
+        this.fondo = new ImageIcon("Utilizables/bienvenido.png").getImage();
     }
     
     @Override

@@ -69,6 +69,10 @@ public class VentanaAgregarActividad extends JFrame{
         return nombre;
     }
 
+    public void setAreaNombreActividad(String areaNombreActividad) {
+        this.areaNombreActividad.setText(areaNombreActividad);
+    }
+    
     public String getTiempo() {
         return tiempo;
     }

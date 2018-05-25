@@ -33,7 +33,7 @@ public class VentanaEditarUsuario extends JFrame implements ActionListener{
         
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setTitle("Editar");
-        this.setSize(500, 600);
+        this.setSize(400, 600);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setVisible(true);

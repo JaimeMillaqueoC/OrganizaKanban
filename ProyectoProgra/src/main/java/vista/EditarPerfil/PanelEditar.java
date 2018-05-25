@@ -33,7 +33,7 @@ public class PanelEditar extends JPanel implements ActionListener{
     private JLabel lblPerfil, lblNombre, lblApellido, lblInsitucion;
     public JTextField tfNombre, tfApellido, tfInstitucion;
     private JButton btnCambiarF, btnCancelar, btnGuardar;
-    public String ruta = "Utilizables\\fotoUser.png";
+    public String ruta = "Utilizables/fotoUser.png";
     private VentanaPrincipal vp;
     
     public PanelEditar(VentanaPrincipal vp) {

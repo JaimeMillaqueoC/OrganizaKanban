@@ -17,14 +17,14 @@ import javax.swing.border.TitledBorder;
  * @author nicolas
  */
 public class Actividad extends JPanel {
-    
+
     private String nombre;
     private String duracion;
-    
+
     private JLabel name, duration;
-    
+
     public Actividad() {
-    
+        incializar();
     }
 
     public Actividad(String nombre, String duracion) {
@@ -32,14 +32,18 @@ public class Actividad extends JPanel {
         this.duracion = duracion;
         agregarDatos();
     }
-    
+
     private void incializar() {
-        this.setBackground(Color.gray);
+        GridLayout d = new GridLayout(2, 1);
+        this.setLayout(d);
     }
 
-    private void agregarDatos() {       
-        javax.swing.border.Border bordejpanel = new TitledBorder(new LineBorder(Color.BLACK), this.nombre);
+    private void agregarDatos() {
+        javax.swing.border.Border bordejpanel = new TitledBorder(new LineBorder(Color.BLACK), "");
         this.setBorder(bordejpanel);
+        this.setBackground(Color.LIGHT_GRAY);
+        this.name = new JLabel(this.nombre);
+        this.add(this.name);
     }
 
     public String getNombre() {
@@ -48,5 +52,5 @@ public class Actividad extends JPanel {
 
     public String getDuracion() {
         return duracion;
-    }    
+    }
 }

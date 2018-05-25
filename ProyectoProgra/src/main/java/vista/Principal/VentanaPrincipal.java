@@ -27,12 +27,13 @@ import vista.Estadisticas.VentanaOtrasEstadisticas;
  * @author Jaime
  */
 public class VentanaPrincipal extends JFrame implements ActionListener, MouseListener {
+
     private BarraMenu barraSuperior;
     public Perfil pPerfil;
     public Usuario usuario;
     private int cant;
-    
-    private Panel paneluno,paneldos,paneltres;
+
+    private Panel paneluno, paneldos, paneltres;
     private GestionarActividades gestor;
     private Actividad actividad;
     private VentanaAgregarActividad ventanaAgregarActividad;
@@ -41,9 +42,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
     private VentanaEditarUsuario vEditarU;
     private VentanaContacto contacto;
     private VentanaInformaciones informaciones;
-    
-    private final int cantidadPanelesActividad = 10;
 
+    private final int cantidadPanelesActividad = 10;
 
     public VentanaPrincipal() {
         this.venatanas();
@@ -52,29 +52,29 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
         this.inicializarComponentes();
         this.gestorActividades();
     }
-    
-    private void venatanas(){
+
+    private void venatanas() {
         this.ventanaAgregarActividad = new VentanaAgregarActividad();
-        
+
     }
-    
+
     private void iniciarPaneles() {
         this.usuario = new Usuario();
         this.barraSuperior = new BarraMenu();
         this.pPerfil = new Perfil(this.usuario);
-        
-        this.paneluno = new Panel("Por Hacer",cantidadPanelesActividad);
-        this.paneldos = new Panel("Haciendo",cantidadPanelesActividad);
-        this.paneltres = new Panel("hecho",cantidadPanelesActividad);
-        
+
+        this.paneluno = new Panel("Por Hacer", cantidadPanelesActividad);
+        this.paneldos = new Panel("Haciendo", cantidadPanelesActividad);
+        this.paneltres = new Panel("hecho", cantidadPanelesActividad);
+
         this.setJMenuBar(barraSuperior);
-        
+
         this.add(this.pPerfil);
         this.add(this.paneluno);
         this.add(this.paneldos);
         this.add(this.paneltres);
     }
-    
+
     private void acciones() {
         this.barraSuperior.editarPerfil.addActionListener(this);
         this.barraSuperior.otrosDatos.addActionListener(this);
@@ -85,8 +85,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
         this.barraSuperior.salir.addActionListener(this);
         this.pPerfil.btnAniadirNuevo.addActionListener(this);
         this.ventanaAgregarActividad.botonAceptar.addActionListener(this);
+        this.ventanaAgregarActividad.botonCancelar.addActionListener(this);
     }
-    
+
     private void inicializarComponentes() {
         GridLayout distribucion = new GridLayout(1, 4);
         this.setLayout(distribucion);
@@ -97,11 +98,11 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
-    
-    private void gestorActividades(){
-        this.gestor = new GestionarActividades(paneluno,paneldos,paneltres);
+
+    private void gestorActividades() {
+        this.gestor = new GestionarActividades(paneluno, paneldos, paneltres);
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         //Botones PanelPerfil
@@ -109,7 +110,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
             if (this.ventanaAgregarActividad != null) {
                 this.ventanaAgregarActividad.dispose();
             }
-            this.ventanaAgregarActividad.setVisible(true);            
+            this.ventanaAgregarActividad.setVisible(true);
         }
         //Botones Barra superior
         if (this.barraSuperior.editarPerfil == e.getSource()) {
@@ -153,60 +154,78 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
         if (this.barraSuperior.guardar == e.getSource()) {
             System.out.println("Guardado");
         }
-        
+
         //Botonoes Ventana Agregar Actividad
-        if(this.ventanaAgregarActividad.botonAceptar == e.getSource()){
+        if (this.ventanaAgregarActividad.botonAceptar == e.getSource()) {
             this.ventanaAgregarActividad.extraerDatos();
             String nombreTemporal = this.ventanaAgregarActividad.getNombre();
             String tiempoTemporal = this.ventanaAgregarActividad.getTiempo();
-            this.actividad = new Actividad(nombreTemporal,tiempoTemporal);
+            this.actividad = new Actividad(nombreTemporal, tiempoTemporal);
             this.gestor.agregarActividad(actividad);
+            this.ventanaAgregarActividad.setAreaNombreActividad("");
             this.paneluno = this.gestor.agregarActividadPanelPorHacer();
             this.paneluno.agregarLista(this.actividad);
-            this.paneluno.getListaPaneles().get(this.paneluno.getListaPaneles().size()-1).addMouseListener(this);
+            this.paneluno.getListaPaneles().get(this.paneluno.getListaPaneles().size() - 1).addMouseListener(this);
             this.paneluno.updateUI();
             this.ventanaAgregarActividad.dispose();
-            System.out.println(this.paneluno.getListaPaneles());
         }
-        
-     }
+        if (this.ventanaAgregarActividad.botonCancelar == e.getSource()) {
+            this.ventanaAgregarActividad.setAreaNombreActividad("");
+            this.ventanaAgregarActividad.dispose();
+        }
+
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (this.paneluno.getListaPaneles().size()>0) {
+        if (this.paneluno.getListaPaneles().size() > 0) {
             for (int i = 0; i < this.paneluno.getListaPaneles().size(); i++) {
                 if (this.paneluno.getListaPaneles().get(i) == e.getSource()) {
-                    this.paneldos.agregarLista(new Actividad(this.paneluno.getListaPaneles().get(i).getNombre(), this.paneluno.getListaPaneles().get(i).getDuracion()));
-                    this.paneldos.getListaPaneles().get(this.paneldos.getListaPaneles().size()-1).addMouseListener(this);
-                    this.paneluno.remove(this.paneluno.getListaPaneles().get(i));
-                    this.paneluno.getListaPaneles().remove(i);
-                    this.paneluno.updateUI();
+                    if (e.getClickCount() == 1) {
+                        //Agregar Ventana para editar la actividad
+                    }
+                    if (e.getClickCount() == 2) {
+                        this.paneldos.agregarLista(new Actividad(this.paneluno.getListaPaneles().get(i).getNombre(), this.paneluno.getListaPaneles().get(i).getDuracion()));
+                        this.paneldos.getListaPaneles().get(this.paneldos.getListaPaneles().size() - 1).addMouseListener(this);
+                        this.paneluno.remove(this.paneluno.getListaPaneles().get(i));
+                        this.paneluno.getListaPaneles().remove(i);
+                        this.paneluno.updateUI();
+                    }
+
                 }
-                
+
             }
         }
-        if (this.paneldos.getListaPaneles().size()>0) {
+        if (this.paneldos.getListaPaneles().size() > 0) {
             for (int i = 0; i < this.paneldos.getListaPaneles().size(); i++) {
                 if (this.paneldos.getListaPaneles().get(i) == e.getSource()) {
-                    this.paneltres.agregarLista(new Actividad(this.paneldos.getListaPaneles().get(i).getNombre(), this.paneldos.getListaPaneles().get(i).getDuracion()));
-                    this.paneldos.remove(this.paneldos.getListaPaneles().get(i));
-                    this.paneldos.getListaPaneles().remove(i);
-                    this.paneldos.updateUI();
+                    if (e.getClickCount() == 1) {
+                        //Agregar Ventana para editar la actividad
+                    }
+                    if (e.getClickCount() == 2) {
+                        this.paneltres.agregarLista(new Actividad(this.paneldos.getListaPaneles().get(i).getNombre(), this.paneldos.getListaPaneles().get(i).getDuracion()));
+                        this.paneldos.remove(this.paneldos.getListaPaneles().get(i));
+                        this.paneldos.getListaPaneles().remove(i);
+                        this.paneldos.updateUI();
+                    }
                 }
-                
             }
         }
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {
+    }
 
     @Override
-    public void mouseReleased(MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {
+    }
 
     @Override
-    public void mouseEntered(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {
+    }
 
     @Override
-    public void mouseExited(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {
+    }
 }
