@@ -7,6 +7,8 @@ package vista.Principal;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -22,41 +24,39 @@ import javax.swing.JTextField;
  */
 public class VentanaAgregarActividad extends JFrame{
     
-    private JPanel panelDatos, panelBoton;
-    public JButton botonAceptar, botonCancelar;
+    private JPanel panelTitulo,panelDatos, panelBoton;
+    public JButton botonAceptar;
     private JLabel nombreActividad;
-    private JTextField areaNombreActividad;
-    private String nombre, tiempo;
-
+    public JTextField areaNombreActividad;
+    private String nombre;
     public VentanaAgregarActividad() {
         inicializar();
     }
 
     private void inicializar() {
-        GridLayout distribucion = new GridLayout(2,1);
+        GridLayout distribucion = new GridLayout(3,1);
         this.setLayout(distribucion);
         
-        this.panelBoton = new JPanel();
-        this.panelDatos = new JPanel();
-        this.panelDatos.setLayout(new FlowLayout());
-        this.panelBoton.setSize(50, 350);
+        this.panelTitulo = new JPanel(new GridBagLayout());
+        this.panelBoton = new JPanel(new GridBagLayout());
+        this.panelDatos = new JPanel(new GridBagLayout());
         
-        this.nombreActividad = new JLabel("Actividad:    ");
-        this.areaNombreActividad = new JTextField(21);
-        
-        this.panelDatos.add(this.nombreActividad);
-        this.panelDatos.add(this.areaNombreActividad);
-        
+        this.nombreActividad = new JLabel("Agregar Actividad");
+        this.nombreActividad.setFont( new Font( "Helvetica", Font.BOLD, 18 ) );
         this.botonAceptar = new JButton("Aceptar");
-        this.botonCancelar = new JButton("Cancelar");
-        this.panelBoton.add(this.add(this.botonAceptar));
-        this.panelBoton.add(this.add(this.botonCancelar));
+        this.areaNombreActividad = new JTextField(20);
+        
+        this.panelTitulo.add(this.nombreActividad);
+        this.panelDatos.add(this.areaNombreActividad);
+        this.panelBoton.add(this.botonAceptar);
+        
+        this.add(this.panelTitulo);
         this.add(this.panelDatos);
         this.add(this.panelBoton);
         
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setTitle("Editar");
-        this.setSize(350, 200);
+        this.setTitle("Agregar");
+        this.setSize(350, 150);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
     }
@@ -71,10 +71,6 @@ public class VentanaAgregarActividad extends JFrame{
 
     public void setAreaNombreActividad(String areaNombreActividad) {
         this.areaNombreActividad.setText(areaNombreActividad);
-    }
-    
-    public String getTiempo() {
-        return tiempo;
     }
     
     

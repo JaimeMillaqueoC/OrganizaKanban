@@ -22,23 +22,19 @@ public class GestionarActividades {
         this.panel3 = panel3;
     }
     
-    public Panel agregarActividadPanelPorHacer(){
-        this.panel1.add(this.actividad);
+    public Panel agregarActividadPanelPorHacer(Actividad actividad){
+        this.panel1.agregarLista(actividad);
+        this.panel1.add(actividad);
         return this.panel1;
     }
-    public Panel agregarActividadPanelHaciendo(){
-        this.panel2.add(this.actividad);
+    public Panel agregarActividadPanelHaciendo(Actividad actividad){
+        this.panel2.agregarLista(actividad);
+        this.panel2.add(actividad);
         return this.panel2;
     }
-    public Panel agregarActividadPanelHecho(){
-        this.panel3.add(this.actividad);
+    public Panel agregarActividadPanelHecho(Actividad actividad){
+        this.panel3.agregarLista(actividad);
+        this.panel3.add(actividad);
         return this.panel3;
-    }
-    
-    public void agregarActividad(Actividad actividad) {
-        this.actividad = actividad;
-    }
-    
-    
-    
+    }  
 }

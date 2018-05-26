@@ -29,6 +29,10 @@ public class Panel extends JPanel{
         this.tituloPanel = titulo;
         iniciarComponentes();
     }
+
+    Panel() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
    
     private void iniciarComponentes(){
         GridLayout distribucion = new GridLayout(cantidadTareas,1);

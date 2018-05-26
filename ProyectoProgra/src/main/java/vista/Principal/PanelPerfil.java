@@ -28,14 +28,14 @@ import modelo.Usuario;
  *
  * @author Jaime
  */
-public class Perfil extends JPanel {
+public class PanelPerfil extends JPanel {
 
     private Image fondo;
     private final Usuario user;
     public JButton btnAniadirNuevo;
     
 
-    public Perfil(Usuario user) {
+    public PanelPerfil(Usuario user) {
         this.user = user;
         this.inicializarComponentes();
     }

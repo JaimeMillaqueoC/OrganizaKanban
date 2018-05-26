@@ -53,7 +53,7 @@ public class VentanaEditarUsuario extends JFrame implements ActionListener{
             this.vp.usuario.setPrimerNombre(this.pEditar.tfNombre.getText());
             this.vp.usuario.setApellidoMaterno(this.pEditar.tfApellido.getText());
             this.vp.usuario.setUniversidad(this.pEditar.tfInstitucion.getText());
-            this.vp.pPerfil.updateUI();
+            this.vp.panelPerfil.updateUI();
             this.setVisible(false);
         }
     }

@@ -19,23 +19,15 @@ import javax.swing.border.TitledBorder;
 public class Actividad extends JPanel {
 
     private String nombre;
+    private String Descripcion;
     private String duracion;
 
-    private JLabel name, duration;
-
-    public Actividad() {
-        incializar();
-    }
-
-    public Actividad(String nombre, String duracion) {
+    private JLabel name;
+    
+  
+    public Actividad(String nombre) {
         this.nombre = nombre;
-        this.duracion = duracion;
         agregarDatos();
-    }
-
-    private void incializar() {
-        GridLayout d = new GridLayout(2, 1);
-        this.setLayout(d);
     }
 
     private void agregarDatos() {
@@ -50,7 +42,4 @@ public class Actividad extends JPanel {
         return nombre;
     }
 
-    public String getDuracion() {
-        return duracion;
-    }
 }

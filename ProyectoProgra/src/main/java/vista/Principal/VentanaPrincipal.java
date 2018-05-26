@@ -29,7 +29,7 @@ import vista.Estadisticas.VentanaOtrasEstadisticas;
 public class VentanaPrincipal extends JFrame implements ActionListener, MouseListener {
 
     private BarraMenu barraSuperior;
-    public Perfil pPerfil;
+    public PanelPerfil panelPerfil;
     public Usuario usuario;
     private int cant;
 
@@ -39,9 +39,11 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
     private VentanaAgregarActividad ventanaAgregarActividad;
     private VentanaEstadisticasTareas estadisticas;
     private VentanaOtrasEstadisticas otrasEstadisticas;
-    private VentanaEditarUsuario vEditarU;
+    private VentanaEditarUsuario ventanaEditarUsuario;
     private VentanaContacto contacto;
     private VentanaInformaciones informaciones;
+    
+    private VistaActividad ventanaActividad;
 
     private final int cantidadPanelesActividad = 10;
 
@@ -61,7 +63,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
     private void iniciarPaneles() {
         this.usuario = new Usuario();
         this.barraSuperior = new BarraMenu();
-        this.pPerfil = new Perfil(this.usuario);
+        this.panelPerfil = new PanelPerfil(this.usuario);
 
         this.paneluno = new Panel("Por Hacer", cantidadPanelesActividad);
         this.paneldos = new Panel("Haciendo", cantidadPanelesActividad);
@@ -69,7 +71,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
 
         this.setJMenuBar(barraSuperior);
 
-        this.add(this.pPerfil);
+        this.add(this.panelPerfil);
         this.add(this.paneluno);
         this.add(this.paneldos);
         this.add(this.paneltres);
@@ -83,9 +85,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
         this.barraSuperior.informacion.addActionListener(this);
         this.barraSuperior.guardar.addActionListener(this);
         this.barraSuperior.salir.addActionListener(this);
-        this.pPerfil.btnAniadirNuevo.addActionListener(this);
+        this.panelPerfil.btnAniadirNuevo.addActionListener(this);
         this.ventanaAgregarActividad.botonAceptar.addActionListener(this);
-        this.ventanaAgregarActividad.botonCancelar.addActionListener(this);
     }
 
     private void inicializarComponentes() {
@@ -94,6 +95,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("OrganizaUfro");
         this.setResizable(false);
+        //this.setUndecorated(true);
         this.setSize(1000, 600);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -106,7 +108,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
     @Override
     public void actionPerformed(ActionEvent e) {
         //Botones PanelPerfil
-        if (this.pPerfil.btnAniadirNuevo == e.getSource()) {
+        if (this.panelPerfil.btnAniadirNuevo == e.getSource()) {
             if (this.ventanaAgregarActividad != null) {
                 this.ventanaAgregarActividad.dispose();
             }
@@ -114,11 +116,11 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
         }
         //Botones Barra superior
         if (this.barraSuperior.editarPerfil == e.getSource()) {
-            if (this.vEditarU != null) {
-                this.vEditarU.dispose();
+            if (this.ventanaEditarUsuario != null) {
+                this.ventanaEditarUsuario.dispose();
             }
-            this.vEditarU = new VentanaEditarUsuario(this);
-            this.vEditarU.setVisible(true);
+            this.ventanaEditarUsuario = new VentanaEditarUsuario(this);
+            this.ventanaEditarUsuario.setVisible(true);
         }
         if (this.barraSuperior.datosTarea == e.getSource()) {
             if (this.estadisticas != null) {
@@ -158,22 +160,13 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
         //Botonoes Ventana Agregar Actividad
         if (this.ventanaAgregarActividad.botonAceptar == e.getSource()) {
             this.ventanaAgregarActividad.extraerDatos();
-            String nombreTemporal = this.ventanaAgregarActividad.getNombre();
-            String tiempoTemporal = this.ventanaAgregarActividad.getTiempo();
-            this.actividad = new Actividad(nombreTemporal, tiempoTemporal);
-            this.gestor.agregarActividad(actividad);
-            this.ventanaAgregarActividad.setAreaNombreActividad("");
-            this.paneluno = this.gestor.agregarActividadPanelPorHacer();
-            this.paneluno.agregarLista(this.actividad);
+            this.actividad = new Actividad(this.ventanaAgregarActividad.getNombre());
+            this.paneluno = this.gestor.agregarActividadPanelPorHacer(actividad);
             this.paneluno.getListaPaneles().get(this.paneluno.getListaPaneles().size() - 1).addMouseListener(this);
             this.paneluno.updateUI();
+            this.ventanaAgregarActividad.areaNombreActividad.setText(null);
             this.ventanaAgregarActividad.dispose();
         }
-        if (this.ventanaAgregarActividad.botonCancelar == e.getSource()) {
-            this.ventanaAgregarActividad.setAreaNombreActividad("");
-            this.ventanaAgregarActividad.dispose();
-        }
-
     }
 
     @Override
@@ -181,11 +174,12 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
         if (this.paneluno.getListaPaneles().size() > 0) {
             for (int i = 0; i < this.paneluno.getListaPaneles().size(); i++) {
                 if (this.paneluno.getListaPaneles().get(i) == e.getSource()) {
-                    if (e.getClickCount() == 1) {
+                    if (e.getButton() == MouseEvent.BUTTON3) {
                         //Agregar Ventana para editar la actividad
+                        this.ventanaActividad = new VistaActividad(new Actividad(this.paneluno.getListaPaneles().get(i).getNombre()));
                     }
-                    if (e.getClickCount() == 2) {
-                        this.paneldos.agregarLista(new Actividad(this.paneluno.getListaPaneles().get(i).getNombre(), this.paneluno.getListaPaneles().get(i).getDuracion()));
+                    if (e.getButton() == MouseEvent.BUTTON1) {
+                        this.paneldos.agregarLista(new Actividad(this.paneluno.getListaPaneles().get(i).getNombre()));
                         this.paneldos.getListaPaneles().get(this.paneldos.getListaPaneles().size() - 1).addMouseListener(this);
                         this.paneluno.remove(this.paneluno.getListaPaneles().get(i));
                         this.paneluno.getListaPaneles().remove(i);
@@ -199,14 +193,26 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
         if (this.paneldos.getListaPaneles().size() > 0) {
             for (int i = 0; i < this.paneldos.getListaPaneles().size(); i++) {
                 if (this.paneldos.getListaPaneles().get(i) == e.getSource()) {
-                    if (e.getClickCount() == 1) {
+                    if (e.getButton() == MouseEvent.BUTTON3) {
                         //Agregar Ventana para editar la actividad
+                        this.ventanaActividad = new VistaActividad(new Actividad(this.paneldos.getListaPaneles().get(i).getNombre()));
                     }
-                    if (e.getClickCount() == 2) {
-                        this.paneltres.agregarLista(new Actividad(this.paneldos.getListaPaneles().get(i).getNombre(), this.paneldos.getListaPaneles().get(i).getDuracion()));
+                    if (e.getButton() == MouseEvent.BUTTON1) {
+                        this.paneltres.agregarLista(new Actividad(this.paneldos.getListaPaneles().get(i).getNombre()));
+                        this.paneltres.getListaPaneles().get(this.paneltres.getListaPaneles().size() - 1).addMouseListener(this);
                         this.paneldos.remove(this.paneldos.getListaPaneles().get(i));
                         this.paneldos.getListaPaneles().remove(i);
                         this.paneldos.updateUI();
+                    }
+                }
+            }
+        }
+        if (this.paneltres.getListaPaneles().size() > 0) {
+            for (int i = 0; i < this.paneltres.getListaPaneles().size(); i++) {
+                if (this.paneltres.getListaPaneles().get(i) == e.getSource()) {
+                    if (e.getButton() == MouseEvent.BUTTON3) {
+                        //Agregar Ventana para editar la actividad
+                        this.ventanaActividad = new VistaActividad(new Actividad(this.paneltres.getListaPaneles().get(i).getNombre()));
                     }
                 }
             }

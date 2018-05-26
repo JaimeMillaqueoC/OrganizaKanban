@@ -5,10 +5,8 @@
  */
 package launcher;
 
-import vista.Bienvenida.VentanaBienvenida;
-import vista.Estadisticas.VentanaEstadisticasTareas;
-import vista.Estadisticas.VentanaOtrasEstadisticas;
-import vista.Principal.VentanaAgregarActividad;
+import vista.Bienvenida.VentanaSplash;
+import vista.Principal.VistaActividad;
 
 
 /**
@@ -21,9 +19,7 @@ public class App {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //VentanaOtrasEstadisticas a = new VentanaOtrasEstadisticas();
-        //VentanaEstadisticasTareas ds = new VentanaEstadisticasTareas();
-        VentanaBienvenida vB = new VentanaBienvenida();
+        VentanaSplash iniciar = new VentanaSplash();
     }
     
 }
