@@ -50,8 +50,7 @@ public class VentanaEditarUsuario extends JFrame implements ActionListener{
         }
         if (this.pEditar.getBtnGuardar() == e.getSource()) {
             this.vp.usuario.setRutaFoto(this.pEditar.ruta);
-            this.vp.usuario.setPrimerNombre(this.pEditar.tfNombre.getText());
-            this.vp.usuario.setApellidoMaterno(this.pEditar.tfApellido.getText());
+            this.vp.usuario.setNombre(this.pEditar.tfNombre.getText());
             this.vp.usuario.setUniversidad(this.pEditar.tfInstitucion.getText());
             this.vp.panelPerfil.updateUI();
             this.setVisible(false);

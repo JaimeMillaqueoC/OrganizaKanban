@@ -52,7 +52,7 @@ public class PanelPerfil extends JPanel {
         this.add(imagen);
         
         JPanel panelDatos = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JLabel nombre = new JLabel(this.user.getPrimerNombre()+" "+this.user.getApellidoMaterno()+" "+this.user.getApellitoPaterno());
+        JLabel nombre = new JLabel(this.user.getNombre());
         panelDatos.add(nombre);
         JLabel universidad = new JLabel(this.user.getUniversidad());
         panelDatos.add(universidad);

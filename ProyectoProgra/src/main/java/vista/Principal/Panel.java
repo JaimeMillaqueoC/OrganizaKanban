@@ -49,4 +49,8 @@ public class Panel extends JPanel{
     public ArrayList<Actividad> getListaPaneles() {
         return listaActividades;
     }
+    
+    public String getTitulo(){
+        return this.tituloPanel;
+    }
 }

@@ -24,6 +24,7 @@ public class Actividad extends JPanel {
 
     private JLabel name;
     
+    public Actividad(){}
   
     public Actividad(String nombre) {
         this.nombre = nombre;
@@ -41,5 +42,19 @@ public class Actividad extends JPanel {
     public String getNombre() {
         return nombre;
     }
+    
+    public String getDescripcion() {
+        return Descripcion;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setDescripcion(String Descripcion) {
+        this.Descripcion = Descripcion;
+    }
+    
+    
 
 }

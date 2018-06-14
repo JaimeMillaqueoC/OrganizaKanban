@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import modelo.Actividad;
 import modelo.GestionarActividades;
+import modelo.RecuperadorActivdades;
 import modelo.Usuario;
 import vista.Ayuda.VentanaContacto;
 import vista.Ayuda.VentanaInformaciones;
@@ -42,6 +43,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
     private VentanaEditarUsuario ventanaEditarUsuario;
     private VentanaContacto contacto;
     private VentanaInformaciones informaciones;
+    private RecuperadorActivdades recuperarActivididad;
     
     private VistaActividad ventanaActividad;
 
@@ -50,6 +52,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
     public VentanaPrincipal() {
         this.venatanas();
         this.iniciarPaneles();
+        this.agregarActividadesGuardaas();
         this.acciones();
         this.inicializarComponentes();
         this.gestorActividades();
@@ -67,14 +70,20 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
 
         this.paneluno = new Panel("Por Hacer", cantidadPanelesActividad);
         this.paneldos = new Panel("Haciendo", cantidadPanelesActividad);
-        this.paneltres = new Panel("hecho", cantidadPanelesActividad);
-
+        this.paneltres = new Panel("Hecho", cantidadPanelesActividad);
+        
+        
         this.setJMenuBar(barraSuperior);
 
         this.add(this.panelPerfil);
         this.add(this.paneluno);
         this.add(this.paneldos);
         this.add(this.paneltres);
+    }
+    
+    private void agregarActividadesGuardaas() {
+        //Agregar action listener a cada panel agregado....
+        this.recuperarActivididad = new RecuperadorActivdades(this.paneluno, this.paneldos, this.paneltres);
     }
 
     private void acciones() {
