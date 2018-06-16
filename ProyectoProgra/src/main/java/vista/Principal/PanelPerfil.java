@@ -14,7 +14,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -31,39 +30,46 @@ import modelo.Usuario;
 public class PanelPerfil extends JPanel {
 
     private Image fondo;
-    private final Usuario user;
+    private Usuario user;
     public JButton btnAniadirNuevo;
-    
+    private String primerNombre;
+    private String universidad;
+    private String rutaFoto;
+    private JLabel lblNombre, lblUniversidad, imagen;
 
     public PanelPerfil(Usuario user) {
         this.user = user;
+        this.primerNombre = this.user.getNombre();
+        this.universidad = this.user.getUniversidad();
+        this.rutaFoto = this.user.getRutaFoto();
         this.inicializarComponentes();
     }
 
-    private void inicializarComponentes(){
-        GridLayout distribucion = new GridLayout(4,1);
+    private void inicializarComponentes() {
+        GridLayout distribucion = new GridLayout(4, 1);
         this.setLayout(distribucion);
         javax.swing.border.Border bordejpanel = new TitledBorder(new LineBorder(Color.BLACK), "Usuario");
         this.setBorder(bordejpanel);
-        
-        ImageIcon image = new ImageIcon(this.user.getRutaFoto());
+
+        ImageIcon image = new ImageIcon(this.rutaFoto);
         image = new ImageIcon(image.getImage().getScaledInstance(100, 100, BufferedImage.SCALE_SMOOTH));
-        JLabel imagen = new JLabel(image);
-        this.add(imagen);
-        
+        this.imagen = new JLabel(image);
+//        this.imagen.setIcon(image);
+        this.add(this.imagen);
+
         JPanel panelDatos = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JLabel nombre = new JLabel(this.user.getNombre());
-        panelDatos.add(nombre);
-        JLabel universidad = new JLabel(this.user.getUniversidad());
-        panelDatos.add(universidad);
+        this.lblNombre = new JLabel(this.primerNombre);
+        panelDatos.add(lblNombre);
+        this.lblUniversidad = new JLabel(this.universidad);
+        panelDatos.add(this.lblUniversidad);
         this.add(panelDatos);
-        
+
         this.btnAniadirNuevo = new JButton("Añadir Actividad");
-        this.btnAniadirNuevo.setBackground(Color.LIGHT_GRAY);     
+        this.btnAniadirNuevo.setBackground(Color.LIGHT_GRAY);
         JPanel panelBoton = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelBoton.add(this.btnAniadirNuevo);
-        this.add(panelBoton);  
-        
+        this.add(panelBoton);
+
     }
 
     @Override
@@ -72,5 +78,28 @@ public class PanelPerfil extends JPanel {
         this.setOpaque(false);
         super.paint(g);
     }
+
+    public void setUser(Usuario user) {
+        this.user = user;
+    }
+
+    public void setNombre(String nombre) {
+        this.lblNombre.setText(nombre);
+    }
+
+    public void setLblUniversidad(String universidad) {
+        this.lblUniversidad.setText(universidad);
+    }
+
+    public void setRutaFoto(String rutaFoto) {
+        this.rutaFoto = rutaFoto;
+        ImageIcon image = new ImageIcon(this.rutaFoto);
+        image = new ImageIcon(image.getImage().getScaledInstance(100, 100, BufferedImage.SCALE_SMOOTH));
+        this.imagen.setIcon(image);
+        this.updateUI();
+        
+    }
+    
+    
 
 }

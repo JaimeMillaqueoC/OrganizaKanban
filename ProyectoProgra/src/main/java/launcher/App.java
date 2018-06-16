@@ -6,8 +6,6 @@
 package launcher;
 
 import vista.Bienvenida.VentanaSplash;
-import vista.Principal.VistaActividad;
-
 
 /**
  *

@@ -32,12 +32,11 @@ public class PanelEditar extends JPanel implements ActionListener{
     private ImageIcon imPerfil;
     private JLabel lblPerfil, lblNombre, lblApellido, lblInsitucion;
     public JTextField tfNombre, tfApellido, tfInstitucion;
-    private JButton btnCambiarF, btnCancelar, btnGuardar;
-    public String ruta = "Utilizables/fotoUser.png";
-    private VentanaPrincipal vp;
+    private JButton btnCambiarF, btnCancelar, btnGuardar, btnPredeterminado;
+    public String ruta;
     
-    public PanelEditar(VentanaPrincipal vp) {
-        this.vp = vp;
+    public PanelEditar(String ruta) {
+        this.ruta = ruta;
         this.inicializarComponentes();
     }
     
@@ -47,7 +46,7 @@ public class PanelEditar extends JPanel implements ActionListener{
         this.setLayout(distribucion);
         this.setBackground(Color.WHITE);
         
-        c.gridwidth = 4;
+        c.gridwidth = 3;
         c.weighty = 1.0;
         this.imPerfil = new ImageIcon(this.ruta);
         this.lblPerfil = new JLabel();
@@ -65,7 +64,7 @@ public class PanelEditar extends JPanel implements ActionListener{
         c.weighty = 1.0;
         
         c.gridy = 2;
-        c.gridwidth = 2;
+        c.gridwidth = 1;
         c.weightx = 1.0;
         this.lblNombre = new JLabel("Nombre:");
         this.add(this.lblNombre,c);
@@ -78,9 +77,9 @@ public class PanelEditar extends JPanel implements ActionListener{
         this.lblInsitucion = new JLabel("Institución:");
         this.add(this.lblInsitucion,c);
         
-        c.gridx = 2;
+        c.gridx = 1;
         c.gridy = 2;
-        c.gridwidth = 1;
+        c.gridwidth = 2;
         c.anchor = GridBagConstraints.CENTER;
         this.tfNombre = new JTextField();
         this.tfNombre.setPreferredSize(new Dimension(200, 25));
@@ -100,10 +99,16 @@ public class PanelEditar extends JPanel implements ActionListener{
         
         c.gridy = 5;
         c.gridx = 0;
-        c.gridwidth = 2;
+        c.gridwidth = 1;
         this.btnCancelar = new JButton("Cancelar");
         this.btnCancelar.setBackground(Color.LIGHT_GRAY);
         this.add(this.btnCancelar,c);
+        
+        c.gridy = 5;
+        c.gridx = 1;
+        this.btnPredeterminado = new JButton("Predeterminado");
+        this.btnPredeterminado.setBackground(Color.LIGHT_GRAY);
+        this.add(this.btnPredeterminado,c);
         
         c.gridy = 5;
         c.gridx = 2;
@@ -134,6 +139,10 @@ public class PanelEditar extends JPanel implements ActionListener{
 
     public JButton getBtnGuardar() {
         return btnGuardar;
+    }
+
+    public JButton getBtnPredeterminado() {
+        return btnPredeterminado;
     }
     
     @Override

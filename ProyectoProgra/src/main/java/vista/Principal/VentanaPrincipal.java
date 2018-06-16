@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import modelo.Actividad;
 import modelo.GestionarActividades;
+import modelo.ManejoArchivos;
 import modelo.RecuperadorActivdades;
 import modelo.Usuario;
 import vista.Ayuda.VentanaContacto;
@@ -33,6 +34,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
     public PanelPerfil panelPerfil;
     public Usuario usuario;
     private int cant;
+    
+    private ManejoArchivos mArchivos;
 
     private Panel paneluno, paneldos, paneltres;
     private GestionarActividades gestor;
@@ -50,6 +53,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
     private final int cantidadPanelesActividad = 10;
 
     public VentanaPrincipal() {
+        this.mArchivos = new ManejoArchivos();
         this.venatanas();
         this.iniciarPaneles();
         this.agregarActividadesGuardaas();
@@ -60,14 +64,13 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
 
     private void venatanas() {
         this.ventanaAgregarActividad = new VentanaAgregarActividad();
-
     }
 
     private void iniciarPaneles() {
-        this.usuario = new Usuario();
+        this.usuario = (Usuario) this.mArchivos.cargarDatos("Datos/datosUsuario.bin");
         this.barraSuperior = new BarraMenu();
         this.panelPerfil = new PanelPerfil(this.usuario);
-
+        
         this.paneluno = new Panel("Por Hacer", cantidadPanelesActividad);
         this.paneldos = new Panel("Haciendo", cantidadPanelesActividad);
         this.paneltres = new Panel("Hecho", cantidadPanelesActividad);

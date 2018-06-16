@@ -15,42 +15,15 @@ import java.util.logging.Logger;
  *
  * @author nicolas
  */
-public class Usuario {
+public class Usuario implements java.io.Serializable{
     
     private String nombre;
     private String universidad;
     private String rutaFoto;
     
     public Usuario() {
-        this.recuperarDatos();
-    }
-
-    public Usuario(String primerNombre, String apellidoMaterno, String apellitoPaterno, String universidad, String rutaFoto) {
-        this.nombre = primerNombre;
-        this.universidad = universidad;
-        this.rutaFoto = rutaFoto;
     }
     
-    private void recuperarDatos() {
-        try {
-            String filaCaracteres;
-            String archivoDatosUsuario = "Datos/datosUsuario.txt";
-            
-            FileReader lectorArchivoDatosUsuario = new FileReader(archivoDatosUsuario);
-            BufferedReader bufferArchivoDatosUsuario = new BufferedReader(lectorArchivoDatosUsuario);
-            
-            while((filaCaracteres = bufferArchivoDatosUsuario.readLine())!= null) {
-                String partesFilaCaracteres[] =  filaCaracteres.split("&");
-                this.nombre  = partesFilaCaracteres[0];
-                this.universidad = partesFilaCaracteres[1];
-                this.rutaFoto = partesFilaCaracteres[2];
-            }
-            bufferArchivoDatosUsuario.close();
-        } catch (IOException ex) {
-            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     public String getNombre() {
         return nombre;
     }
@@ -74,7 +47,6 @@ public class Usuario {
     public void setRutaFoto(String rutaFoto) {
         this.rutaFoto = rutaFoto;
     }
-    
     
     
     
