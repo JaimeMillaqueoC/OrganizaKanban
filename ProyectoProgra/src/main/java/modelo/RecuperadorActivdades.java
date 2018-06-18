@@ -5,11 +5,7 @@
  */
 package modelo;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import vista.Principal.Panel;
 
 /**
@@ -17,53 +13,30 @@ import vista.Principal.Panel;
  * @author analista.apoyo1
  */
 public class RecuperadorActivdades {
-    
-    private Actividad actividadUno,actividadDos,actividadTres;
+
     private Panel panelTemporalUno, panelTemporalDos, panelTemporalTres;
+    private ManejoArchivos mArchivos;
+    private final String RUTAP1 = "Datos/datosPanelUno.bin", RUTAP2 = "Datos/datosPanelDos.bin", RUTAP3 = "Datos/datosPanelTres.bin";
 
     public RecuperadorActivdades(Panel panelTemporalUno, Panel panelTemporalDos, Panel panelTemporalTres) {
         this.panelTemporalUno = panelTemporalUno;
         this.panelTemporalDos = panelTemporalDos;
         this.panelTemporalTres = panelTemporalTres;
-        agregarActvidades();
+        this.mArchivos = new ManejoArchivos();
+        CargarActvidades();
+//        guardarActividades();
     }
-    
-    private void agregarActvidades() {
-        try {
-            String filaCaracteres;
-            String archivoDatosUsuario = "Datos/actividadesUsuario.txt";
-            
-            FileReader lectorArchivoDatosUsuario = new FileReader(archivoDatosUsuario);
-            BufferedReader bufferArchivoDatosUsuario = new BufferedReader(lectorArchivoDatosUsuario);
-            
-            while((filaCaracteres = bufferArchivoDatosUsuario.readLine())!= null) {
-                String partesActividad[] =  filaCaracteres.split("&");
-                if(partesActividad[2].equals(this.panelTemporalUno.getTitulo())){
-                    this.actividadUno = new Actividad(partesActividad[0]);
-                    this.actividadUno.setDescripcion(partesActividad[1]);
-                    this.panelTemporalUno.agregarLista(this.actividadUno);
-                }
-                if(partesActividad[2].equals(this.panelTemporalDos.getTitulo())){
-                    this.actividadDos = new Actividad(partesActividad[0]);
-                    this.actividadDos.setDescripcion(partesActividad[1]);
-                    this.panelTemporalDos.agregarLista(this.actividadDos);
-                }
-                if(partesActividad[2].equals(this.panelTemporalTres.getTitulo())){
-                    this.actividadTres = new Actividad(partesActividad[0]);
-                    this.actividadTres.setDescripcion(partesActividad[1]);
-                    this.panelTemporalTres.agregarLista(this.actividadTres);
-                    this.actividadTres = null;
-                }
-            }
-            bufferArchivoDatosUsuario.close();
-        } catch (IOException ex) {
-            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        System.err.println("");
+
+    public void CargarActvidades() {
+        this.panelTemporalUno.setListaActividades(this.mArchivos.CargarActvidades(this.RUTAP1));
+        this.panelTemporalDos.setListaActividades(this.mArchivos.CargarActvidades(this.RUTAP2));
+        this.panelTemporalTres.setListaActividades(this.mArchivos.CargarActvidades(this.RUTAP3));
     }
-    
-    
-    
-    
+
+    public void guardarActividades() {
+        this.mArchivos.almacenarActividades(this.panelTemporalUno.getListaActividades(), this.RUTAP1);
+        this.mArchivos.almacenarActividades(this.panelTemporalDos.getListaActividades(), this.RUTAP2);
+        this.mArchivos.almacenarActividades(this.panelTemporalTres.getListaActividades(), this.RUTAP3);
+        JOptionPane.showMessageDialog(null, "Las actividades se han guardado correctamente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+    }
 }

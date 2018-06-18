@@ -30,9 +30,7 @@ public class Panel extends JPanel{
         iniciarComponentes();
     }
 
-    Panel() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    Panel() {}
    
     private void iniciarComponentes(){
         GridLayout distribucion = new GridLayout(cantidadTareas,1);
@@ -46,7 +44,15 @@ public class Panel extends JPanel{
         this.add(actividad);
     }
 
-    public ArrayList<Actividad> getListaPaneles() {
+    public void setListaActividades(ArrayList<Actividad> listaActividades) {
+        this.listaActividades = listaActividades;
+        for(Actividad act : this.listaActividades) {
+            this.add(act);
+        }
+        this.updateUI();
+    }
+    
+    public ArrayList<Actividad> getListaActividades() {
         return listaActividades;
     }
     

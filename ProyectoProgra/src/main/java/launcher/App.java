@@ -7,6 +7,7 @@ package launcher;
 
 import vista.Bienvenida.VentanaSplash;
 
+
 /**
  *
  * @author Jaime
@@ -18,6 +19,7 @@ public class App {
      */
     public static void main(String[] args) {
         VentanaSplash iniciar = new VentanaSplash();
+//        VentanaPrincipal v = new VentanaPrincipal();
     }
     
 }

@@ -16,7 +16,7 @@ import javax.swing.border.TitledBorder;
  *
  * @author nicolas
  */
-public class Actividad extends JPanel {
+public class Actividad extends JPanel implements java.io.Serializable{
 
     private String nombre;
     private String Descripcion;
@@ -54,7 +54,5 @@ public class Actividad extends JPanel {
     public void setDescripcion(String Descripcion) {
         this.Descripcion = Descripcion;
     }
-    
-    
 
 }
