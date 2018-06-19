@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import modelo.Actividad;
 import modelo.GestionarActividades;
 import modelo.ManejoArchivos;
@@ -33,7 +34,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
     public PanelPerfil panelPerfil;
     public Usuario usuario;
     private int cant;
-    private final String RUTAP1 = "Datos/datosPanelUno.bin";
+    private final String RUTAP1 = "Datos/datosPanelUno.bin", RUTAP2 = "Datos/datosPanelDos.bin", RUTAP3 = "Datos/datosPanelTres.bin";
 
     private ManejoArchivos mArchivos;
 
@@ -60,6 +61,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
         this.acciones();
         this.inicializarComponentes();
         this.gestorActividades();
+        this.cerrar();
     }
 
     private void venatanas() {
@@ -105,7 +107,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
     private void inicializarComponentes() {
         GridLayout distribucion = new GridLayout(1, 4);
         this.setLayout(distribucion);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setTitle("OrganizaUfro");
         this.setResizable(false);
         //this.setUndecorated(true);
@@ -167,13 +169,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
             System.exit(0);
         }
         if (this.barraSuperior.guardar == e.getSource()) {
-            this.paneluno.setListaActividades(this.quitarMouseListener(this.paneluno.getListaActividades()));
-            this.paneldos.setListaActividades(this.quitarMouseListener(this.paneldos.getListaActividades()));
-            this.paneltres.setListaActividades(this.quitarMouseListener(this.paneltres.getListaActividades()));
-            this.recuperarActivididad.guardarActividades();
-            this.paneluno.setListaActividades(this.darMouseListener(this.paneluno.getListaActividades()));
-            this.paneldos.setListaActividades(this.darMouseListener(this.paneldos.getListaActividades()));
-            this.paneltres.setListaActividades(this.darMouseListener(this.paneltres.getListaActividades()));
+            this.guardar();
         }
 
         //Botonoes Ventana Agregar Actividad
@@ -270,5 +266,79 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
             aux.add(ac);
         }
         return aux;
+    }
+
+    private boolean detectarCambios() {
+        int cont = 0;
+        ArrayList<Actividad> auxP1 = this.mArchivos.CargarActvidades(RUTAP1);
+        ArrayList<Actividad> auxP2 = this.mArchivos.CargarActvidades(RUTAP2);
+        ArrayList<Actividad> auxP3 = this.mArchivos.CargarActvidades(RUTAP3);
+        if (!(auxP1.size() == this.paneluno.getListaActividades().size() && auxP2.size() == this.paneldos.getListaActividades().size() && auxP3.size() == this.paneltres.getListaActividades().size())) {
+            cont++;
+        }
+        for (Actividad actP : this.paneluno.getListaActividades()) {
+            for (Actividad actS : auxP1) {
+                System.out.println(actP.getNombre()+" : "+actS.getNombre());
+                if (!actP.getNombre().equals(actS.getNombre()) || !actP.getDescripcion().equals(actS.getDescripcion())) {
+                    cont++;
+                    break;
+                }
+            }
+        }
+        for (Actividad actP : this.paneldos.getListaActividades()) {
+            for (Actividad actS : auxP2) {
+                System.out.println(actP.getNombre()+" : "+actS.getNombre());
+                if (!actP.getNombre().equals(actS.getNombre()) || !actP.getDescripcion().equals(actS.getDescripcion())) {
+                    cont++;
+                    break;
+                }
+            }
+        }
+        for (Actividad actP : this.paneltres.getListaActividades()) {
+            for (Actividad actS : auxP3) {
+                System.out.println(actP.getNombre()+" : "+actS.getNombre());
+                if (!actP.getNombre().equals(actS.getNombre()) || !actP.getDescripcion().equals(actS.getDescripcion())) {
+                    cont++;
+                    break;
+                }
+            }
+        }
+        if (cont != 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    private void cerrar() {
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                if (detectarCambios()) {
+                    if (JOptionPane.showConfirmDialog(rootPane, "¡Se han detectados cambios sin guardar!\n¿Desea guardar antes de salir?",
+                            "Salir del sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+                        System.exit(0);
+                    } else {
+                        guardar();
+                        System.exit(0);
+                    }
+                }
+                else{
+                    System.exit(0);
+                }
+
+            }
+        });
+    }
+
+    private void guardar() {
+        this.paneluno.setListaActividades(this.quitarMouseListener(this.paneluno.getListaActividades()));
+        this.paneldos.setListaActividades(this.quitarMouseListener(this.paneldos.getListaActividades()));
+        this.paneltres.setListaActividades(this.quitarMouseListener(this.paneltres.getListaActividades()));
+        this.recuperarActivididad.guardarActividades();
+        this.paneluno.setListaActividades(this.darMouseListener(this.paneluno.getListaActividades()));
+        this.paneldos.setListaActividades(this.darMouseListener(this.paneldos.getListaActividades()));
+        this.paneltres.setListaActividades(this.darMouseListener(this.paneltres.getListaActividades()));
     }
 }

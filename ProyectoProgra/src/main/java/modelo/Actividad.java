@@ -28,6 +28,7 @@ public class Actividad extends JPanel implements java.io.Serializable{
   
     public Actividad(String nombre) {
         this.nombre = nombre;
+        this.Descripcion = "";
         agregarDatos();
     }
 
