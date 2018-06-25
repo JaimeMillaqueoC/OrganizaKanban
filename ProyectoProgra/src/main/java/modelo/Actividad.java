@@ -20,8 +20,7 @@ public class Actividad extends JPanel implements java.io.Serializable{
 
     private String nombre;
     private String Descripcion;
-    private String duracion;
-
+    
     private JLabel name;
     
     public Actividad(){}

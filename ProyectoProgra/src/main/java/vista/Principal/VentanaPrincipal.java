@@ -191,11 +191,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
                 if (this.paneluno.getListaActividades().get(i) == e.getSource()) {
                     if (e.getButton() == MouseEvent.BUTTON3) {
                         //Agregar Ventana para editar la actividad
-                        this.ventanaActividad = new VistaActividad(new Actividad(this.paneluno.getListaActividades().get(i).getNombre()));
+                        this.ventanaActividad = new VistaActividad(this.paneluno.getListaActividades().get(i),this.paneluno);
                     }
                     if (e.getButton() == MouseEvent.BUTTON1) {
-                        this.paneldos.agregarLista(new Actividad(this.paneluno.getListaActividades().get(i).getNombre()));
-                        this.paneldos.getListaActividades().get(this.paneldos.getListaActividades().size() - 1).addMouseListener(this);
+                        this.paneldos.agregarLista(this.paneluno.getListaActividades().get(i));
                         this.paneluno.remove(this.paneluno.getListaActividades().get(i));
                         this.paneluno.getListaActividades().remove(i);
                         this.paneluno.updateUI();
@@ -205,16 +204,15 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
 
             }
         }
-        if (this.paneldos.getListaActividades().size() > 0) {
+        else if (this.paneldos.getListaActividades().size() > 0) {
             for (int i = 0; i < this.paneldos.getListaActividades().size(); i++) {
                 if (this.paneldos.getListaActividades().get(i) == e.getSource()) {
                     if (e.getButton() == MouseEvent.BUTTON3) {
                         //Agregar Ventana para editar la actividad
-                        this.ventanaActividad = new VistaActividad(new Actividad(this.paneldos.getListaActividades().get(i).getNombre()));
+                        this.ventanaActividad = new VistaActividad(this.paneldos.getListaActividades().get(i),this.paneldos);
                     }
                     if (e.getButton() == MouseEvent.BUTTON1) {
-                        this.paneltres.agregarLista(new Actividad(this.paneldos.getListaActividades().get(i).getNombre()));
-                        this.paneltres.getListaActividades().get(this.paneltres.getListaActividades().size() - 1).addMouseListener(this);
+                        this.paneltres.agregarLista(this.paneldos.getListaActividades().get(i));
                         this.paneldos.remove(this.paneldos.getListaActividades().get(i));
                         this.paneldos.getListaActividades().remove(i);
                         this.paneldos.updateUI();
@@ -222,12 +220,12 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
                 }
             }
         }
-        if (this.paneltres.getListaActividades().size() > 0) {
+        else if (this.paneltres.getListaActividades().size() > 0) {
             for (int i = 0; i < this.paneltres.getListaActividades().size(); i++) {
                 if (this.paneltres.getListaActividades().get(i) == e.getSource()) {
                     if (e.getButton() == MouseEvent.BUTTON3) {
                         //Agregar Ventana para editar la actividad
-                        this.ventanaActividad = new VistaActividad(new Actividad(this.paneltres.getListaActividades().get(i).getNombre()));
+                        this.ventanaActividad = new VistaActividad(this.paneltres.getListaActividades().get(i),this.paneltres);
                     }
                 }
             }

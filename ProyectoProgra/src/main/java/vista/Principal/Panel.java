@@ -42,6 +42,7 @@ public class Panel extends JPanel{
     public void agregarLista(Actividad actividad){
         this.listaActividades.add(actividad);
         this.add(actividad);
+        this.updateUI();
     }
 
     public void setListaActividades(ArrayList<Actividad> listaActividades) {
