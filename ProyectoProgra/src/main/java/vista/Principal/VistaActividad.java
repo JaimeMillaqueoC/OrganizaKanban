@@ -6,18 +6,25 @@
 package vista.Principal;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import modelo.Actividad;
+import vista.CronometroPomodoro.frameCronometro;
 
 /**
  *
@@ -25,7 +32,7 @@ import modelo.Actividad;
  */
 public class VistaActividad extends JFrame implements ActionListener{
     private final Actividad actividad;
-    private JLabel tituloActividad;
+    private JLabel tituloActividad, lblTiempo;
     private JPanel panelSuperior,PanelCentral,PanelInferior;
     private JTextArea descripcion;
     private JButton botonGuardar, btnCronometro, btnBorrar;
@@ -65,6 +72,12 @@ public class VistaActividad extends JFrame implements ActionListener{
     this.btnBorrar = new JButton("Borrar");
     this.btnBorrar.addActionListener(this);
     this.PanelCentral.add(this.btnBorrar,c);
+    
+    c.gridx = 0;
+    c.gridy = 2;
+    this.lblTiempo = new JLabel();
+    this.PanelCentral.add(this.lblTiempo,c);
+    
     this.add(this.PanelCentral,BorderLayout.CENTER);
     
     this.botonGuardar = new JButton("Guardar");
@@ -90,7 +103,7 @@ public class VistaActividad extends JFrame implements ActionListener{
             this.dispose();
         }
         if (this.btnCronometro == e.getSource()) {
-            
+            frameCronometro f = new frameCronometro(this.actividad);
         }
         if (this.btnBorrar == e.getSource()) {
             this.panel.remove(this.actividad);
@@ -99,5 +112,10 @@ public class VistaActividad extends JFrame implements ActionListener{
             this.dispose();
         }
     }
-}
 
+    public void setLblTiempo(String Tiempo) {
+        this.lblTiempo.setText(Tiempo);
+        this.PanelCentral.updateUI();
+    }
+    
+}

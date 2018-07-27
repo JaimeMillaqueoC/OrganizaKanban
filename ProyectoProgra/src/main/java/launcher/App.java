@@ -5,12 +5,8 @@
  */
 package launcher;
 
-import java.util.ArrayList;
-import modelo.Actividad;
-import modelo.ManejoArchivos;
-import vista.CronometroPomodoro.frameCronometro;
 import vista.Bienvenida.VentanaSplash;
-
+import vista.Principal.VentanaPrincipal;
 
 /**
  *
@@ -22,17 +18,8 @@ public class App {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-    frameCronometro ca = new frameCronometro();
-    ca.setVisible(true);
-    ca.setLocationRelativeTo(null);
-//    resetear actividades
-//        ManejoArchivos mA = new ManejoArchivos();
-//        ArrayList<Actividad> ac = new ArrayList<>();
-//        mA.almacenarActividades(ac, "Datos/datosPanelUno.bin");
-//        mA.almacenarActividades(ac, "Datos/datosPanelDos.bin");
-//        mA.almacenarActividades(ac, "Datos/datosPanelTres.bin");
-    VentanaSplash vn = new VentanaSplash();
-    
+//        VentanaSplash iniciar = new VentanaSplash();
+        VentanaPrincipal p = new VentanaPrincipal();
     }
+    
 }

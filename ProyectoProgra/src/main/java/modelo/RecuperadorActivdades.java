@@ -5,6 +5,11 @@
  */
 package modelo;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import vista.Principal.Panel;
 
@@ -13,7 +18,7 @@ import vista.Principal.Panel;
  * @author analista.apoyo1
  */
 public class RecuperadorActivdades {
-
+    
     private Panel panelTemporalUno, panelTemporalDos, panelTemporalTres;
     private ManejoArchivos mArchivos;
     private final String RUTAP1 = "Datos/datosPanelUno.bin", RUTAP2 = "Datos/datosPanelDos.bin", RUTAP3 = "Datos/datosPanelTres.bin";

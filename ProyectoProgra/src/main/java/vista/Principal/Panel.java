@@ -29,7 +29,6 @@ public class Panel extends JPanel{
         this.tituloPanel = titulo;
         iniciarComponentes();
     }
-
     Panel() {}
    
     private void iniciarComponentes(){

@@ -5,11 +5,21 @@
  */
 package vista.CronometroPomodoro;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import modelo.Actividad;
 import modelo.Pomodoro;
 
 /**
@@ -18,124 +28,209 @@ import modelo.Pomodoro;
  */
 public class frameCronometro extends JFrame {
     
-    private JButton bContinue, bPause, bStart, bStop;
-    private JLabel display;
-    private JPanel jPanel1,jPanel2;
+    public JButton botonContinue, botonPause, botonStart, botonStop;
+    private JLabel display, displayDerechoInferior,displayDerechoSuperior, displayIzquierdoSuperior, displayIzquierdoInferior;
+    private JPanel panelBotones,panelCronometro,panelDatos, panelDatosIzquierdo,panelDatosIzquierdoSuperior,panelDatosIzquierdoInferior, panelDatosDerecho, panelDatoslDerechoSuperior,panelDatosDerechoInferior;
+    private Actividad actividad;
+    private Pomodoro cronometro;
+    private Object source;
     
-    Pomodoro cronometro;
-    Object source;
-    
-    public frameCronometro() {
+    public frameCronometro(Actividad actividad) {
+        this.actividad = actividad;
         inicializar();
-        cronometro = new Pomodoro(this);
+        cronometro = new Pomodoro(this, actividad);
+        this.display.setText(cronometro.getHr()+" : "+cronometro.getMin()+" : "+cronometro.getSeg());
+        this.displayIzquierdoSuperior.setText(""+actividad.getCantidadPomodorosHechos());
+        this.displayIzquierdoInferior.setText(""+actividad.getCantidadDescanzosHechos());
+        this.displayDerechoSuperior.setText(""+cronometro.getMinPomodoro()+" : "+cronometro.getSegPomodoro());
+        this.displayDerechoInferior.setText(""+cronometro.getMinDescanso()+" : "+cronometro.getSegDescanso());
     }
     
     private void inicializar() {
-        jPanel1 = new JPanel();
-        bStart = new JButton();
-        bPause = new JButton();
-        bContinue = new JButton();
-        bStop = new JButton();
-        jPanel2 = new JPanel();
-        display = new JLabel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        this.panelBotones = new JPanel();
+        this.botonStart = new JButton();
+        this.botonPause = new JButton();
+        this.botonContinue = new JButton();
+        this.botonStop = new JButton();
+        this.panelCronometro = new JPanel();
+        this.display = new JLabel();
+        this.displayDerechoInferior = new JLabel();
+        this.displayDerechoSuperior = new JLabel();
+        this.panelDatos = new JPanel();
+        this.panelDatosIzquierdo = new JPanel();
+        this.panelDatosIzquierdoSuperior = new JPanel();
+        this.panelDatosIzquierdoInferior = new JPanel();
+        this.panelDatosDerecho = new JPanel();
+        this.panelDatoslDerechoSuperior = new JPanel();
+        this.panelDatosDerechoInferior = new JPanel();
+        this.displayIzquierdoSuperior = new JLabel();
+        this.displayIzquierdoInferior = new JLabel();
+        
+        
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cronometro Pomodoro");
-        setBackground(new java.awt.Color(255, 255, 255));
+        this.setUndecorated(false);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), null));
-        jPanel1.setPreferredSize(new java.awt.Dimension(300, 45));
+        panelCronometro.setLayout(new BorderLayout());
 
-        bStart.setText("Iniciar");
-        bStart.addActionListener(new java.awt.event.ActionListener() {
+        botonStart.setText("Iniciar");
+        panelBotones.add(botonStart);
+
+        botonPause.setText("Pause");
+        botonPause.setEnabled(false);
+        panelBotones.add(botonPause);
+
+        botonContinue.setText("Continuar");
+        botonContinue.setEnabled(false);
+        panelBotones.add(botonContinue);
+
+        botonStop.setText("Detener");
+        botonStop.setEnabled(false);
+        panelBotones.add(botonStop);
+                
+        
+        botonStart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startActionPerformed(evt);
             }
         });
-        jPanel1.add(bStart);
-
-        bPause.setText("Pause");
-        bPause.setEnabled(false);
-        bPause.addActionListener(new java.awt.event.ActionListener() {
+        botonPause.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pauseActionPerformed(evt);
             }
         });
-        jPanel1.add(bPause);
-
-        bContinue.setText("Continuar");
-        bContinue.setEnabled(false);
-        bContinue.addActionListener(new java.awt.event.ActionListener() {
+        botonContinue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bcontinueActionPerformed(evt);
             }
         });
-        jPanel1.add(bContinue);
-
-        bStop.setText("Detener");
-        bStop.setEnabled(false);
-        bStop.addActionListener(new java.awt.event.ActionListener() {
+        botonStop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stopActionPerformed(evt);
             }
         });
-        jPanel1.add(bStop);
+        
+        
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
-
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setPreferredSize(new java.awt.Dimension(400, 130));
-        jPanel2.setLayout(new java.awt.BorderLayout());
-
-        display.setFont(new java.awt.Font("Times New Roman", 0, 50)); // NOI18N
-        display.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        display.setText("0 : 0 : 0");
-        jPanel2.add(display, java.awt.BorderLayout.CENTER);
-
-        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
-
+        display.setFont(new java.awt.Font("Times New Roman", 0, 50));
+        display.setHorizontalAlignment(SwingConstants.CENTER);
+        panelCronometro.add(display, BorderLayout.CENTER);
+        
+        displayIzquierdoSuperior.setFont(new java.awt.Font("Times New Roman", 0, 15));
+        displayIzquierdoSuperior.setHorizontalAlignment(SwingConstants.CENTER);
+        displayIzquierdoInferior.setFont(new java.awt.Font("Times New Roman", 0, 15));
+        displayIzquierdoInferior.setHorizontalAlignment(SwingConstants.CENTER);
+        panelDatosIzquierdoSuperior.add(displayIzquierdoSuperior, BorderLayout.CENTER);
+        panelDatosIzquierdoInferior.add(displayIzquierdoInferior, BorderLayout.CENTER);
+        Border bordePanelDatosIzquierdoSuperior = new TitledBorder(new LineBorder(Color.BLACK), "Pomodoros");
+        this.panelDatosIzquierdoSuperior.setBorder(bordePanelDatosIzquierdoSuperior);
+        Border bordePanelDatosIzquierdoInferior = new TitledBorder(new LineBorder(Color.BLACK), "Descansos");
+        this.panelDatosIzquierdoInferior.setBorder(bordePanelDatosIzquierdoInferior);
+        GridLayout distribucionPanelIzquierdo = new GridLayout(2, 1);
+        panelDatosIzquierdo.setLayout(distribucionPanelIzquierdo);
+        panelDatosIzquierdo.add(panelDatosIzquierdoSuperior, BorderLayout.CENTER);
+        panelDatosIzquierdo.add(panelDatosIzquierdoInferior, BorderLayout.CENTER);
+        
+        displayDerechoSuperior.setFont(new java.awt.Font("Times New Roman", 0, 20));
+        displayDerechoSuperior.setHorizontalAlignment(SwingConstants.CENTER);
+        displayDerechoInferior.setFont(new java.awt.Font("Times New Roman", 0, 20));
+        displayDerechoInferior.setHorizontalAlignment(SwingConstants.CENTER);
+        panelDatoslDerechoSuperior.add(displayDerechoSuperior, BorderLayout.CENTER);
+        panelDatosDerechoInferior.add(displayDerechoInferior, BorderLayout.CENTER);
+        Border bordePanelDatosDerechoSuperior = new TitledBorder(new LineBorder(Color.BLACK), "Cronometro Pomodoro");
+        this.panelDatoslDerechoSuperior.setBorder(bordePanelDatosDerechoSuperior);
+        Border bordePanelDatosDerechoInferior = new TitledBorder(new LineBorder(Color.BLACK), "Cronometro Descanso");
+        this.panelDatosDerechoInferior.setBorder(bordePanelDatosDerechoInferior);
+        GridLayout distribucionPanelDerecho = new GridLayout(2, 1);
+        panelDatosDerecho.setLayout(distribucionPanelDerecho);
+        panelDatosDerecho.add(panelDatoslDerechoSuperior, BorderLayout.CENTER);
+        panelDatosDerecho.add(panelDatosDerechoInferior, BorderLayout.CENTER);
+        
+        GridLayout distribucion = new GridLayout(3, 1);
+        this.setLayout(distribucion);
+        this.add(panelCronometro);
+        this.add(panelBotones);
+        GridLayout distribucionPanelDatos = new GridLayout(1, 2);
+        this.panelDatos.setLayout(distribucionPanelDatos);
+        Border bordIzquierdo = new TitledBorder(new LineBorder(Color.BLACK), "Contador");
+        this.panelDatosIzquierdo.setBorder(bordIzquierdo);
+        Border bordeDerecho = new TitledBorder(new LineBorder(Color.BLACK), "Cronometros");
+        this.panelDatosDerecho.setBorder(bordeDerecho);
+        this.panelDatos.add(this.panelDatosIzquierdo);
+        this.panelDatos.add(this.panelDatosDerecho);
+        this.add(panelDatos);
         pack();
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
     }
 
     private void startActionPerformed(ActionEvent evt) {
         source = evt.getSource();
-        if (source == bStart) {
+        if (source == botonStart) {
+            cronometro.setSegundos(this.actividad.getSegundosActividad());
             cronometro.createThread();
             cronometro.setLive(true);
             cronometro.setGo(true);
-            bStart.setEnabled(false);
-            bPause.setEnabled(true);
-            bStop.setEnabled(true);
+            botonStart.setEnabled(false);
+            botonPause.setEnabled(true);
+            botonStop.setEnabled(true);
         }
     }
 
     private void pauseActionPerformed(ActionEvent evt) {
-        bPause.setEnabled(false);
-        bContinue.setEnabled(true);
+        this.actividad.setSegundosActividad(this.cronometro.getSegundos());
+        botonPause.setEnabled(false);
+        botonContinue.setEnabled(true);
         cronometro.suspenderThread();
     }
 
     private void bcontinueActionPerformed(ActionEvent evt) {
-        bPause.setEnabled(true);
+        this.cronometro.setSegundos(this.actividad.getSegundosActividad());
+        botonPause.setEnabled(true);
         cronometro.continuarThread();
-        bContinue.setEnabled(false);
+        botonContinue.setEnabled(false);
     }
 
     private void stopActionPerformed(ActionEvent evt) {
-        bStart.setEnabled(true);
-        bStop.setEnabled(false);
-        bPause.setEnabled(false);
+        this.actividad.setSegundosActividad(0);
+        this.cronometro.setSegundos(this.actividad.getSegundosActividad());
+        botonStart.setEnabled(true);
+        botonStop.setEnabled(false);
+        botonPause.setEnabled(false);
         cronometro.setLive(false);
         cronometro.setGo(false);
         cronometro.setSegundos(0);
     }
     
-    public JLabel getDisplay() {
+    public JLabel getDisplayPrimario() {
         return display;
     }
     
-    public void setDisplay(JLabel display) {
-        this.display = display;
+    public JLabel displayPanelDerechoInferior() {
+        return displayDerechoInferior;
     }
+    
+    public JLabel displayPanelDerechoSuperior() {
+        return displayDerechoSuperior;
+    }
+    
+    public JLabel displayPanelIzquierdoInferior() {
+        return displayIzquierdoInferior;
+    }
+    
+    public JLabel displayPanelIzquierdoSuperior() {
+        return displayIzquierdoSuperior;
+    }
+    
+    public void guardarDatos(){
+        int temporalCantidadPomodoros = actividad.getCantidadPomodorosHechos();
+        temporalCantidadPomodoros++;
+        actividad.setCantidadPomodorosHechos(temporalCantidadPomodoros);
+    }
+    
+    public int getCantidadPomodoro() {
+        int cantidad = this.actividad.getCantidadPomodorosHechos();
+        return cantidad;
+    }
+    
 }

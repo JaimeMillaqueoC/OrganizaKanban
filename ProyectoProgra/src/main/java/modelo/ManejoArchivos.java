@@ -25,14 +25,13 @@ public class ManejoArchivos {
 
     public ManejoArchivos() {
     }
-
     public void guardarDatos(Object ob, String ruta) {
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(ruta);
             ObjectOutputStream out = new ObjectOutputStream(fos);
             out.writeObject(ob);
-
+            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ManejoArchivos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -44,35 +43,27 @@ public class ManejoArchivos {
                 Logger.getLogger(ManejoArchivos.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
+        
     }
-
-    public Object cargarDatos(String ruta) {
+    
+    public  Object cargarDatos(String ruta){
         Object aux = null;
-        FileInputStream fis = null;
         try {
-            fis = new FileInputStream(ruta);
+            FileInputStream fis = new FileInputStream(ruta);
             ObjectInputStream in = new ObjectInputStream(fis);
-
-            aux = (Object) in.readObject();
-
+            
+            aux = (Object)in.readObject();
+            
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ManejoArchivos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ManejoArchivos.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                fis.close();
-            } catch (IOException ex) {
-                Logger.getLogger(ManejoArchivos.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         return aux;
     }
-
-    public ArrayList<Actividad> CargarActvidades(String ruta) {
+  public ArrayList<Actividad> CargarActvidades(String ruta) {
         ArrayList<Actividad> actividades = new ArrayList<>();
         try {
             File f1 = new File(ruta);
