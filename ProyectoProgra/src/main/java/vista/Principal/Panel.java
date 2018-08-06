@@ -36,6 +36,7 @@ public class Panel extends JPanel{
         this.setLayout(distribucion);
         javax.swing.border.Border bordejpanel = new TitledBorder(new LineBorder(Color.BLACK), tituloPanel);
         this.setBorder(bordejpanel);
+        this.setOpaque(false);
     }
     /**
      * Agrega un objeto Actividad a una lista de actividades y a su vez agrega el objeto Actividad al panel

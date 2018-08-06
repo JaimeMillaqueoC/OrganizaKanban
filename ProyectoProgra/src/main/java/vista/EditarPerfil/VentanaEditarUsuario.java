@@ -61,7 +61,7 @@ public class VentanaEditarUsuario extends JFrame implements ActionListener{
             this.vp.usuario.setRutaFoto(this.pEditar.ruta);
             this.vp.usuario.setNombre(this.pEditar.tfNombre.getText()+" "+this.pEditar.tfApellido.getText());
             this.vp.usuario.setUniversidad(this.pEditar.tfInstitucion.getText());
-            this.mArchivos.guardarDatos(this.vp.usuario, this.ruta.RUTA_USUARIO);
+            this.mArchivos.guardarDatos(this.vp.usuario, this.ruta.USUARIO);
             this.vp.panelPerfil.setUser(this.vp.usuario);
             this.vp.panelPerfil.setNombre(this.pEditar.tfNombre.getText()+" "+this.pEditar.tfApellido.getText());
             this.vp.panelPerfil.setLblUniversidad(this.pEditar.tfInstitucion.getText());
@@ -71,8 +71,8 @@ public class VentanaEditarUsuario extends JFrame implements ActionListener{
             
         }
         if (this.pEditar.getBtnPredeterminado() == e.getSource()) {
-            this.vp.usuario = (Usuario) this.mArchivos.recuperarDatosUsuario(this.ruta.RUTA_USUARIO_PREDETERMINADO);
-            this.mArchivos.guardarDatos(this.vp.usuario, this.ruta.RUTA_USUARIO);
+            this.vp.usuario = (Usuario) this.mArchivos.recuperarDatosUsuario(this.ruta.USUARIO_PREDETERMINADO);
+            this.mArchivos.guardarDatos(this.vp.usuario, this.ruta.USUARIO);
             this.vp.panelPerfil.setUser(this.vp.usuario);
             this.vp.panelPerfil.setNombre(this.vp.usuario.getNombre());
             this.vp.panelPerfil.setLblUniversidad(this.vp.usuario.getUniversidad());

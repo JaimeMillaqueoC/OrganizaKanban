@@ -72,6 +72,10 @@ public class Actividad extends JPanel {
     public JLabel getLblName() {
         return lblName;
     }
+
+    public void setLblName(String lblName) {
+        this.lblName.setText(lblName);
+    }
     
     public int getSegundosActividad() {
         return segundosActividad;
@@ -112,6 +116,12 @@ public class Actividad extends JPanel {
     public Color getColor(){
         return color;
     }
+    /**
+     * Comprara dos objetos Actividad, el actual y uno que recibe como parametro,
+     * 
+     * @param actividad
+     * @return 
+     */
     public boolean equals(Actividad actividad) {
         if (this.nombre.equals(actividad.getNombre())) {
             if (this.Descripcion.equals(actividad.getDescripcion())) {
@@ -119,14 +129,14 @@ public class Actividad extends JPanel {
                     if (this.segundosActividad == actividad.getSegundosActividad()) {
                         if (this.cantidadPomodorosHechos == actividad.getCantidadPomodorosHechos()) {
                             if(this.cantidadDescanzosHechos == actividad.getCantidadDescanzosHechos()){
-                                return false;
+                                return true;
                             }
                         }
                     }
                 }
             }
         }
-        return true;
+        return false;
     }
     /**
      * clona un objeto Actividad dentro de este objeto Actividad

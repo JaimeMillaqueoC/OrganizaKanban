@@ -56,7 +56,7 @@ public class PanelEditar extends JPanel implements ActionListener {
         if (archivo.exists()) {
             this.imPerfil = new ImageIcon(this.ruta);
         }else
-            this.imPerfil = new ImageIcon(this.r.RUTA_IMAGEN_USUARIO_PREDETERMINADA);
+            this.imPerfil = new ImageIcon(this.r.IMAGEN_USUARIO_PREDETERMINADA);
         this.lblPerfil = new JLabel();
         this.lblPerfil.setSize(200, 200);
         Icon icon = new ImageIcon(this.imPerfil.getImage().getScaledInstance(this.lblPerfil.getWidth(), this.lblPerfil.getHeight(), Image.SCALE_DEFAULT));

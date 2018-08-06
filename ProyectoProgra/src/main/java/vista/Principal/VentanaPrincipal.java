@@ -5,6 +5,8 @@
  */
 package vista.Principal;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import vista.actividad.VentanaActividad;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -14,6 +16,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import modelo.GestionarActividades;
 import utilidades.ManejoArchivos;
 import utilidades.Ruta;
@@ -77,20 +80,30 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
      * Instancia, ordena y agrega los elementos principales de esta clase.
      */
     private void iniciarPaneles() {
-        this.usuario = (Usuario) this.mArchivos.recuperarDatosUsuario(this.ruta.RUTA_USUARIO);
+        this.usuario = (Usuario) this.mArchivos.recuperarDatosUsuario(this.ruta.USUARIO);
         this.barraSuperior = new BarraMenu();
         this.panelPerfil = new PanelPerfil(this.usuario);
-
+        PanelFondo panelAux = new PanelFondo();
         this.panelPorHacer = new Panel("Por Hacer", cantidadPanelesActividad);
         this.panelHaciendo = new Panel("Haciendo", cantidadPanelesActividad);
         this.panelHecho = new Panel("Hecho", cantidadPanelesActividad);
-
+        panelAux.add(this.panelPorHacer);
+        panelAux.add(this.panelHaciendo);
+        panelAux.add(this.panelHecho);
         this.setJMenuBar(barraSuperior);
-
-        this.add(this.panelPerfil);
-        this.add(this.panelPorHacer);
-        this.add(this.panelHaciendo);
-        this.add(this.panelHecho);
+        
+        GridBagLayout distribucion = new GridBagLayout();
+        this.setLayout(distribucion);
+        GridBagConstraints c = new GridBagConstraints();
+        
+        c.weighty = 1.0;
+        c.fill = GridBagConstraints.BOTH;
+        this.add(this.panelPerfil,c);
+        
+        c.gridwidth = 3;
+        c.weightx = 1.0;
+        c.gridx = 1;
+        this.add(panelAux,c);
     }
 
     /**
@@ -123,8 +136,6 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
      * Determina las caracteristicas del JFrame en cuestion.
      */
     private void inicializarComponentes() {
-        GridLayout distribucion = new GridLayout(1, 4);
-        this.setLayout(distribucion);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setTitle("OrganizaUfro");
         this.setResizable(false);
@@ -200,6 +211,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
         if (this.ventanaAgregarActividad.botonAceptar == e.getSource()) {
             this.ventanaAgregarActividad.extraerDatos();
             this.actividad = new Actividad(this.ventanaAgregarActividad.getNombre());
+            this.actividad.setToolTipText("Click derecho para abrir detalles");
             this.panelPorHacer = this.gestor.agregarActividadPanelPorHacer(this.actividad);
             this.panelPorHacer.getListaActividades().get(this.panelPorHacer.getListaActividades().size() - 1).addMouseListener(this);
             this.panelPorHacer.updateUI();
@@ -315,9 +327,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
      * @return
      */
     private boolean detectarCambios() {
-        ArrayList<Actividad> auxP1 = this.mArchivos.recuperarActividades(this.ruta.RUTA_PANEL_POR_HACER);
-        ArrayList<Actividad> auxP2 = this.mArchivos.recuperarActividades(this.ruta.RUTA_PANEL_HACIENDO);
-        ArrayList<Actividad> auxP3 = this.mArchivos.recuperarActividades(this.ruta.RUTA_PANEL_HECHO);
+        ArrayList<Actividad> auxP1 = this.mArchivos.recuperarActividades(this.ruta.PANEL_POR_HACER);
+        ArrayList<Actividad> auxP2 = this.mArchivos.recuperarActividades(this.ruta.PANEL_HACIENDO);
+        ArrayList<Actividad> auxP3 = this.mArchivos.recuperarActividades(this.ruta.PANEL_HECHO);
         if (!(auxP1.size() == this.panelPorHacer.getListaActividades().size() && auxP2.size() == this.panelHaciendo.getListaActividades().size() && auxP3.size() == this.panelHecho.getListaActividades().size())) {
             return true;
         }
@@ -333,7 +345,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
      */
     private boolean buscarDiferencias(ArrayList<Actividad> listGuardada, ArrayList<Actividad> listActual){
         for (int i = 0; i < listActual.size(); i++) {
-                if (listActual.get(i).equals(listGuardada.get(i))) {
+                if (!listActual.get(i).equals(listGuardada.get(i))) {
                 return true;
             }
         }

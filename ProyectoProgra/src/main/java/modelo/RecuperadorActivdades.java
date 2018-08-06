@@ -31,18 +31,18 @@ public class RecuperadorActivdades {
      * Llama a la clase ManejoArchivos para agregar los objetos Activdad dentro de cada panel
      */
     public void CargarActvidades() {
-        this.panelPorhacer.setListaActividades(this.mArchivos.recuperarActividades(this.ruta.RUTA_PANEL_POR_HACER));
-        this.panelHaciendo.setListaActividades(this.mArchivos.recuperarActividades(this.ruta.RUTA_PANEL_HACIENDO));
-        this.panelHecho.setListaActividades(this.mArchivos.recuperarActividades(this.ruta.RUTA_PANEL_HECHO));
+        this.panelPorhacer.setListaActividades(this.mArchivos.recuperarActividades(this.ruta.PANEL_POR_HACER));
+        this.panelHaciendo.setListaActividades(this.mArchivos.recuperarActividades(this.ruta.PANEL_HACIENDO));
+        this.panelHecho.setListaActividades(this.mArchivos.recuperarActividades(this.ruta.PANEL_HECHO));
     }
     /**
      * Llama a la clase ManejoArchivos para almacenar los objetos Actividad (que se encuentran 
     dentro de cada panel) en un archivo .bin disponible para cada panel
      */
     public void guardarActividades() {
-        this.mArchivos.almacenarActividades(this.panelPorhacer.getListaActividades(), this.ruta.RUTA_PANEL_POR_HACER);
-        this.mArchivos.almacenarActividades(this.panelHaciendo.getListaActividades(), this.ruta.RUTA_PANEL_HACIENDO);
-        this.mArchivos.almacenarActividades(this.panelHecho.getListaActividades(), this.ruta.RUTA_PANEL_HECHO);
+        this.mArchivos.almacenarActividades(this.panelPorhacer.getListaActividades(), this.ruta.PANEL_POR_HACER);
+        this.mArchivos.almacenarActividades(this.panelHaciendo.getListaActividades(), this.ruta.PANEL_HACIENDO);
+        this.mArchivos.almacenarActividades(this.panelHecho.getListaActividades(), this.ruta.PANEL_HECHO);
         JOptionPane.showMessageDialog(null, "Las actividades se han guardado correctamente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
     }
 }

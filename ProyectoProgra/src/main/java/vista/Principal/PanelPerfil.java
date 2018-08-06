@@ -61,7 +61,7 @@ public class PanelPerfil extends JPanel {
         this.setLayout(distribucion);
         javax.swing.border.Border bordejpanel = new TitledBorder(new LineBorder(Color.BLACK), "Usuario");
         this.setBorder(bordejpanel);
-        
+        this.setBackground(Color.WHITE);
         this.comprobarRuta();
         
         JPanel panelDatos = new JPanel(new GridBagLayout());
@@ -71,12 +71,14 @@ public class PanelPerfil extends JPanel {
         this.lblUniversidad = new JLabel(this.universidad);
         c.gridy = 1;
         panelDatos.add(this.lblUniversidad, c);
+        panelDatos.setBackground(Color.white);
         this.add(panelDatos);
 
         this.btnAniadirNuevo = new JButton("Añadir Actividad");
         this.btnAniadirNuevo.setBackground(Color.LIGHT_GRAY);
         JPanel panelBoton = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelBoton.add(this.btnAniadirNuevo);
+        panelBoton.setBackground(Color.WHITE);
         this.add(panelBoton);
 
     }
@@ -85,9 +87,9 @@ public class PanelPerfil extends JPanel {
         File archivo = new File(this.rutaImagenUsuario);
         if (!archivo.exists()) {
             JOptionPane.showMessageDialog(null, "No se a encontrado la imagen en la ruta:\n"+this.rutaImagenUsuario+"\nSe ha cambiado a la imagen predeterminada", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-            this.rutaImagenUsuario = this.r.RUTA_IMAGEN_USUARIO_PREDETERMINADA;
+            this.rutaImagenUsuario = this.r.IMAGEN_USUARIO_PREDETERMINADA;
             this.user.setRutaFoto(this.rutaImagenUsuario);
-            this.mArchivos.guardarDatos(this.user, this.r.RUTA_USUARIO);
+            this.mArchivos.guardarDatos(this.user, this.r.USUARIO);
         }
         cargarImagen(this.rutaImagenUsuario);
     }
