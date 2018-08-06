@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelo;
+package utilidades;
 
 import java.io.EOFException;
 import java.io.File;
@@ -16,6 +16,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import vista.Principal.Actividad;
 
 /**
  *
@@ -23,8 +24,11 @@ import java.util.logging.Logger;
  */
 public class ManejoArchivos {
 
-    public ManejoArchivos() {
-    }
+    /**
+     * Guarda la configuración del objeto Usuario en un archivo .bin
+     * @param ob
+     * @param ruta 
+     */
     public void guardarDatos(Object ob, String ruta) {
         FileOutputStream fos = null;
         try {
@@ -45,8 +49,12 @@ public class ManejoArchivos {
         }
         
     }
-    
-    public  Object cargarDatos(String ruta){
+    /**
+     * Carga los datos de un archivo .bin con la configuracion del objeto Usuario
+     * @param ruta
+     * @return 
+     */
+    public  Object recuperarDatosUsuario(String ruta){
         Object aux = null;
         try {
             FileInputStream fis = new FileInputStream(ruta);
@@ -63,13 +71,19 @@ public class ManejoArchivos {
         }
         return aux;
     }
-  public ArrayList<Actividad> CargarActvidades(String ruta) {
+    /**
+     * Carga los objetos Actividad existentes dentro de un archivo .bin
+     * @param ruta
+     * @return ArrayList<Actividad>
+     */
+  public ArrayList<Actividad> recuperarActividades(String ruta) {
         ArrayList<Actividad> actividades = new ArrayList<>();
         try {
             File f1 = new File(ruta);
             FileInputStream fo1 = new FileInputStream(f1);
-            try (ObjectInputStream ois = new ObjectInputStream(fo1)) {
-                Object aux = ois.readObject();
+            try (
+                ObjectInputStream ois = new ObjectInputStream(fo1)) {
+                Object aux = (Object)ois.readObject();
                 while (aux != null) {
                     if (aux instanceof Actividad) {
                         Actividad act = (Actividad) aux;
@@ -80,12 +94,18 @@ public class ManejoArchivos {
                 ois.close();
             }
         } catch (EOFException e1) {
+            System.out.println("ERROR");
+//            e1.printStackTrace();
         } catch (IOException | ClassNotFoundException e2) {
             e2.getMessage();
         }
         return actividades;
     }
-
+  /**
+   * Guarda los objetos Actividad dentro de un archivo .bin 
+   * @param actividades
+   * @param ruta 
+   */
     public void almacenarActividades(ArrayList<Actividad> actividades, String ruta) {
         FileOutputStream fo = null;
         try {
@@ -95,7 +115,7 @@ public class ManejoArchivos {
             ObjectOutputStream oo = new ObjectOutputStream(fo);
 
             for (Actividad act : actividades) {
-                oo.writeObject(act);
+                oo.writeObject((Object)act);
             }
 
         } catch (IOException e) {

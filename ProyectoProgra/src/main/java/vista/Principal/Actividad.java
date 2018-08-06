@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelo;
+package vista.Principal;
 
 import java.awt.Color;
-import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -21,22 +20,17 @@ public class Actividad extends JPanel {
     private String nombre;
     private String Descripcion;
     private JLabel lblName;
+    private final Color colorPre = Color.LIGHT_GRAY;;
+    private Color color;
     
     private int segundosActividad;
     private int cantidadPomodorosHechos;
     private int cantidadDescanzosHechos;
 
-    public Actividad(String nombre, String Descripcion, int segundosActividad, int cantidadPomodorosHechos, int cantidadDescanzosHechos) {
-        this.nombre = nombre;
-        this.Descripcion = Descripcion;
-        this.segundosActividad = segundosActividad;
-        this.cantidadPomodorosHechos = cantidadPomodorosHechos;
-        this.cantidadDescanzosHechos = cantidadDescanzosHechos;
+    public Actividad() {
         agregarDatos();
     }
 
-    
-    
     
     public Actividad(String nombre) {
         this.nombre = nombre;
@@ -47,11 +41,18 @@ public class Actividad extends JPanel {
     private void agregarDatos() {
         javax.swing.border.Border bordejpanel = new TitledBorder(new LineBorder(Color.BLACK), "");
         this.setBorder(bordejpanel);
-        this.setBackground(Color.LIGHT_GRAY);
+        this.pintarActividad();
         this.lblName = new JLabel(this.nombre);
         this.add(this.lblName);
     }
-
+    
+    private void pintarActividad(){
+        if (this.color != null) {
+            this.setBackground(this.color);
+        }else
+            this.setBackground(this.colorPre);
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -95,12 +96,50 @@ public class Actividad extends JPanel {
     public void setCantidadDescanzosHechos(int cantidadDescanzos) {
         this.cantidadDescanzosHechos = cantidadDescanzos;
     }
+
+    public void setColor(Color color) {
+        this.color = color;
+        if (color != null) {
+            this.setBackground(this.color);
+        }
+    }
     
-    
-    public void clonar(Actividad act){
-        this.Descripcion = act.getDescripcion();
-        this.lblName = act.getLblName();
-        this.nombre = act.getNombre();
+
+    public Color getColorPre() {
+        return colorPre;
     }
 
+    public Color getColor(){
+        return color;
+    }
+    public boolean equals(Actividad actividad) {
+        if (this.nombre.equals(actividad.getNombre())) {
+            if (this.Descripcion.equals(actividad.getDescripcion())) {
+                if (this.getBackground().getRGB() == actividad.getBackground().getRGB()) {
+                    if (this.segundosActividad == actividad.getSegundosActividad()) {
+                        if (this.cantidadPomodorosHechos == actividad.getCantidadPomodorosHechos()) {
+                            if(this.cantidadDescanzosHechos == actividad.getCantidadDescanzosHechos()){
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    /**
+     * clona un objeto Actividad dentro de este objeto Actividad
+     * @param act 
+     */
+    public void clonar(Actividad act){
+        this.nombre = act.getNombre();
+        this.Descripcion = act.getDescripcion();
+        this.setColor(act.getBackground());
+        this.lblName.setText(this.nombre);
+        this.segundosActividad = act.getSegundosActividad();
+        this.cantidadPomodorosHechos = act.getCantidadPomodorosHechos();
+        this.cantidadDescanzosHechos = act.getCantidadDescanzosHechos();
+    }
+    
 }

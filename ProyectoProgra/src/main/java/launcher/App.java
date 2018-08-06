@@ -7,6 +7,8 @@ package launcher;
 
 import vista.Bienvenida.VentanaSplash;
 import vista.Principal.VentanaPrincipal;
+import vista.actividad.VentanaActividad;
+import vista.actividad.VentanaColor;
 
 /**
  *
@@ -20,6 +22,7 @@ public class App {
     public static void main(String[] args) {
 //        VentanaSplash iniciar = new VentanaSplash();
         VentanaPrincipal p = new VentanaPrincipal();
+//        VentanaColor vc = new VentanaColor();
     }
     
 }

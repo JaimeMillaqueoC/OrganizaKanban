@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import vista.Principal.Actividad;
 import vista.CronometroPomodoro.frameCronometro;
 /**
  *

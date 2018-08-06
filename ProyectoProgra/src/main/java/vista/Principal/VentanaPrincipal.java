@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package vista.Principal;
+
+import vista.actividad.VentanaActividad;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,9 +14,9 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import modelo.Actividad;
 import modelo.GestionarActividades;
-import modelo.ManejoArchivos;
+import utilidades.ManejoArchivos;
+import utilidades.Ruta;
 import modelo.RecuperadorActivdades;
 import modelo.Usuario;
 import vista.Ayuda.VentanaContacto;
@@ -32,12 +34,12 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
     private BarraMenu barraSuperior;
     public PanelPerfil panelPerfil;
     public Usuario usuario;
-    private int cant;
-    private final String RUTAP1 = "Datos/datosPanelUno.bin", RUTAP2 = "Datos/datosPanelDos.bin", RUTAP3 = "Datos/datosPanelTres.bin";
-    
+    private final Ruta ruta;
     private ManejoArchivos mArchivos;
 
-    private Panel panelUno, panelDos, panelTres;
+    private Panel panelPorHacer;
+    private Panel panelHaciendo;
+    private Panel panelHecho;
     private GestionarActividades gestor;
     private Actividad actividad;
     private VentanaAgregarActividad ventanaAgregarActividad;
@@ -47,50 +49,64 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
     private VentanaContacto contacto;
     private VentanaInformaciones informaciones;
     private RecuperadorActivdades recuperarActivididad;
-    
-    private VistaActividad ventanaActividad;
+
+    private VentanaActividad ventanaActividad;
 
     private final int cantidadPanelesActividad = 10;
 
     public VentanaPrincipal() {
         this.mArchivos = new ManejoArchivos();
+        this.ruta = new Ruta();
         this.venatanas();
         this.iniciarPaneles();
-        this.agregarActividadesGuardaas();
+        this.agregarActividadesGuardadas();
         this.acciones();
         this.inicializarComponentes();
         this.gestorActividades();
         this.cerrar();
     }
 
+    /**
+     * Instancia la clase VentanaAgregarActividad.
+     */
     private void venatanas() {
         this.ventanaAgregarActividad = new VentanaAgregarActividad();
     }
 
+    /**
+     * Instancia, ordena y agrega los elementos principales de esta clase.
+     */
     private void iniciarPaneles() {
-        this.usuario = (Usuario) this.mArchivos.cargarDatos("Datos/datosUsuario.bin");
+        this.usuario = (Usuario) this.mArchivos.recuperarDatosUsuario(this.ruta.RUTA_USUARIO);
         this.barraSuperior = new BarraMenu();
         this.panelPerfil = new PanelPerfil(this.usuario);
-        
-        this.panelUno = new Panel("Por Hacer", cantidadPanelesActividad);
-        this.panelDos = new Panel("Haciendo", cantidadPanelesActividad);
-        this.panelTres = new Panel("Hecho", cantidadPanelesActividad);
-        
+
+        this.panelPorHacer = new Panel("Por Hacer", cantidadPanelesActividad);
+        this.panelHaciendo = new Panel("Haciendo", cantidadPanelesActividad);
+        this.panelHecho = new Panel("Hecho", cantidadPanelesActividad);
+
         this.setJMenuBar(barraSuperior);
 
         this.add(this.panelPerfil);
-        this.add(this.panelUno);
-        this.add(this.panelDos);
-        this.add(this.panelTres);
-    }
-    
-    private void agregarActividadesGuardaas() {
-        this.recuperarActivididad = new RecuperadorActivdades(this.panelUno, this.panelDos, this.panelTres);
-        this.panelUno.setListaActividades(this.darMouseListener(this.panelUno.getListaActividades()));
-        this.panelDos.setListaActividades(this.darMouseListener(this.panelDos.getListaActividades()));
-        this.panelTres.setListaActividades(this.darMouseListener(this.panelTres.getListaActividades()));
+        this.add(this.panelPorHacer);
+        this.add(this.panelHaciendo);
+        this.add(this.panelHecho);
     }
 
+    /**
+     * Instancia la clase recuperarActivididad con el fin de cargar y agregar
+     * los objetos Actividad a cada uno de sus paneles correspondientes.
+     */
+    private void agregarActividadesGuardadas() {
+        this.recuperarActivididad = new RecuperadorActivdades(this.panelPorHacer, this.panelHaciendo, this.panelHecho);
+        this.panelPorHacer.setListaActividades(this.darMouseListener(this.panelPorHacer.getListaActividades()));
+        this.panelHaciendo.setListaActividades(this.darMouseListener(this.panelHaciendo.getListaActividades()));
+        this.panelHecho.setListaActividades(this.darMouseListener(this.panelHecho.getListaActividades()));
+    }
+
+    /**
+     * Agrega los ActionListener a cada elemento que lo necesite.
+     */
     private void acciones() {
         this.barraSuperior.editarPerfil.addActionListener(this);
         this.barraSuperior.otrosDatos.addActionListener(this);
@@ -103,20 +119,25 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
         this.ventanaAgregarActividad.botonAceptar.addActionListener(this);
     }
 
+    /**
+     * Determina las caracteristicas del JFrame en cuestion.
+     */
     private void inicializarComponentes() {
         GridLayout distribucion = new GridLayout(1, 4);
         this.setLayout(distribucion);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setTitle("OrganizaUfro");
         this.setResizable(false);
-        //this.setUndecorated(true);
         this.setSize(1000, 600);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
+    /**
+     * Instancia la clase GestionarActividades.
+     */
     private void gestorActividades() {
-        this.gestor = new GestionarActividades(panelUno, panelDos, panelTres);
+        this.gestor = new GestionarActividades(panelPorHacer, panelHaciendo, panelHecho);
     }
 
     @Override
@@ -170,17 +191,18 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
         if (this.barraSuperior.guardar == e.getSource()) {
             if (!detectarCambios()) {
                 JOptionPane.showMessageDialog(null, "No han habido cambios", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-            }else
+            } else {
                 this.guardar();
+            }
         }
 
         //Botonoes Ventana Agregar Actividad
         if (this.ventanaAgregarActividad.botonAceptar == e.getSource()) {
             this.ventanaAgregarActividad.extraerDatos();
             this.actividad = new Actividad(this.ventanaAgregarActividad.getNombre());
-            this.panelUno = this.gestor.agregarActividadPanelPorHacer(this.actividad);
-            this.panelUno.getListaActividades().get(this.panelUno.getListaActividades().size() - 1).addMouseListener(this);
-            this.panelUno.updateUI();
+            this.panelPorHacer = this.gestor.agregarActividadPanelPorHacer(this.actividad);
+            this.panelPorHacer.getListaActividades().get(this.panelPorHacer.getListaActividades().size() - 1).addMouseListener(this);
+            this.panelPorHacer.updateUI();
             this.ventanaAgregarActividad.areaNombreActividad.setText(null);
             this.ventanaAgregarActividad.dispose();
         }
@@ -188,50 +210,49 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        //Panel UNO
-        if (this.panelUno.getListaActividades().size() > 0) {
-            for (Actividad actividad1 : this.panelUno.getListaActividades()) {
+        //Panel PorHacer
+        if (this.panelPorHacer.getListaActividades().size() > 0) {
+            for (Actividad actividad1 : this.panelPorHacer.getListaActividades()) {
                 if (actividad1 == e.getSource()) {
                     if (e.getButton() == MouseEvent.BUTTON3) {
-                        //Agregar Ventana para editar la actividad
-                        this.ventanaActividad = new VistaActividad(actividad1,this.panelUno);
+                        this.ventanaActividad = new VentanaActividad(actividad1, this.panelPorHacer, this.panelHaciendo, this.panelHecho);
                     }
                     if (e.getButton() == MouseEvent.BUTTON1) {
-                        this.panelDos.agregarLista(new Actividad(actividad1.getNombre(),actividad1.getDescripcion(),actividad1.getSegundosActividad(),actividad1.getCantidadPomodorosHechos(),actividad1.getCantidadDescanzosHechos()));
-                        this.panelDos.getListaActividades().get(this.panelDos.getListaActividades().size() - 1).addMouseListener(this);
-                        this.panelUno.remove(actividad1);
-                        this.panelUno.getListaActividades().remove(actividad1);
-                        this.panelUno.updateUI();
+                        Actividad actAux = new Actividad();
+                        actAux.clonar(actividad1);
+                        this.panelHaciendo.agregarActividad(actAux);
+                        this.panelHaciendo.getListaActividades().get(this.panelHaciendo.getListaActividades().size() - 1).addMouseListener(this);
+                        this.panelPorHacer.remove(actividad1);
+                        this.panelPorHacer.getListaActividades().remove(actividad1);
+                        this.panelPorHacer.updateUI();
                         break;
                     }
                 }
             }
         }
-        //Panel DOS
-        if (this.panelDos.getListaActividades().size() > 0) {
-            for (Actividad actividad2 : this.panelDos.getListaActividades()) {
+        //Panel Haciendo
+        if (this.panelHaciendo.getListaActividades().size() > 0) {
+            for (Actividad actividad2 : this.panelHaciendo.getListaActividades()) {
                 if (actividad2 == e.getSource()) {
                     if (e.getButton() == MouseEvent.BUTTON3) {
-                        //Agregar Ventana para editar la actividad
-                        this.ventanaActividad = new VistaActividad(actividad2,this.panelDos);
+                        this.ventanaActividad = new VentanaActividad(actividad2, this.panelHaciendo, this.panelPorHacer, this.panelHecho);
                     }
                     if (e.getButton() == MouseEvent.BUTTON1) {
-                        this.panelTres.agregarLista(actividad2);
-                        this.panelDos.remove(actividad2);
-                        this.panelDos.getListaActividades().remove(actividad2);
-                        this.panelDos.updateUI();
+                        this.panelHecho.agregarActividad(actividad2);
+                        this.panelHaciendo.remove(actividad2);
+                        this.panelHaciendo.getListaActividades().remove(actividad2);
+                        this.panelHaciendo.updateUI();
                         break;
                     }
                 }
             }
         }
-        //Panel TRES
-        if (this.panelTres.getListaActividades().size() > 0) {
-            for (int i = 0; i < this.panelTres.getListaActividades().size(); i++) {
-                if (this.panelTres.getListaActividades().get(i) == e.getSource()) {
+        //Panel Hecho
+        if (this.panelHecho.getListaActividades().size() > 0) {
+            for (int i = 0; i < this.panelHecho.getListaActividades().size(); i++) {
+                if (this.panelHecho.getListaActividades().get(i) == e.getSource()) {
                     if (e.getButton() == MouseEvent.BUTTON3) {
-                        //Agregar Ventana para editar la actividad
-                        this.ventanaActividad = new VistaActividad(this.panelTres.getListaActividades().get(i),this.panelTres);
+                        this.ventanaActividad = new VentanaActividad(this.panelHecho.getListaActividades().get(i), this.panelHecho, this.panelPorHacer, this.panelHaciendo);
                     }
                 }
             }
@@ -253,6 +274,14 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
     @Override
     public void mouseExited(MouseEvent e) {
     }
+
+    /**
+     * Quita todos los MouseListener de cada objeto Actividad dentro del
+     * ArrayList que recibe
+     *
+     * @param actividades
+     * @return
+     */
     private ArrayList<Actividad> quitarMouseListener(ArrayList<Actividad> actividades) {
         ArrayList<Actividad> aux = new ArrayList<>();
         for (Actividad ac : actividades) {
@@ -262,6 +291,13 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
         return aux;
     }
 
+    /**
+     * Agrega MouseListener a cada objeto Actividad dentro del ArrayList que
+     * recibe
+     *
+     * @param actividades
+     * @return
+     */
     private ArrayList<Actividad> darMouseListener(ArrayList<Actividad> actividades) {
         ArrayList<Actividad> aux = new ArrayList<>();
         for (Actividad ac : actividades) {
@@ -271,74 +307,73 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
         return aux;
     }
 
+    /**
+     * Busca cambios realizados en cada Panel central
+     * (PanelPorHacer,PanelHaciendo,PanelHecho) y dentro de cada objeto
+     * Actividad. En caso de encontrarlos retorna un true.
+     *
+     * @return
+     */
     private boolean detectarCambios() {
-        int cont = 0;
-        ArrayList<Actividad> auxP1 = this.mArchivos.CargarActvidades(RUTAP1);
-        ArrayList<Actividad> auxP2 = this.mArchivos.CargarActvidades(RUTAP2);
-        ArrayList<Actividad> auxP3 = this.mArchivos.CargarActvidades(RUTAP3);
-        if (!(auxP1.size() == this.panelUno.getListaActividades().size() && auxP2.size() == this.panelDos.getListaActividades().size() && auxP3.size() == this.panelTres.getListaActividades().size())) {
-            cont++;
-        }
-        for (Actividad actP : this.panelUno.getListaActividades()) {
-            for (Actividad actS : auxP1) {
-                if (!actP.getNombre().equals(actS.getNombre()) || !actP.getDescripcion().equals(actS.getDescripcion())) {
-                    cont++;
-                    break;
-                }
-            }
-        }
-        for (Actividad actP : this.panelDos.getListaActividades()) {
-            for (Actividad actS : auxP2) {
-                if (!actP.getNombre().equals(actS.getNombre()) || !actP.getDescripcion().equals(actS.getDescripcion())) {
-                    cont++;
-                    break;
-                }
-            }
-        }
-        for (Actividad actP : this.panelTres.getListaActividades()) {
-            for (Actividad actS : auxP3) {
-                if (!actP.getNombre().equals(actS.getNombre()) || !actP.getDescripcion().equals(actS.getDescripcion())) {
-                    cont++;
-                    break;
-                }
-            }
-        }
-        if (cont != 0) {
+        ArrayList<Actividad> auxP1 = this.mArchivos.recuperarActividades(this.ruta.RUTA_PANEL_POR_HACER);
+        ArrayList<Actividad> auxP2 = this.mArchivos.recuperarActividades(this.ruta.RUTA_PANEL_HACIENDO);
+        ArrayList<Actividad> auxP3 = this.mArchivos.recuperarActividades(this.ruta.RUTA_PANEL_HECHO);
+        if (!(auxP1.size() == this.panelPorHacer.getListaActividades().size() && auxP2.size() == this.panelHaciendo.getListaActividades().size() && auxP3.size() == this.panelHecho.getListaActividades().size())) {
             return true;
-        } else {
-            return false;
         }
-
+        return this.buscarDiferencias(auxP1, this.panelPorHacer.getListaActividades())
+                || this.buscarDiferencias(auxP2, this.panelHaciendo.getListaActividades())
+                || this.buscarDiferencias(auxP3, this.panelHecho.getListaActividades());
+    }
+    /**
+     * Busca las diferencias entre los atributos de los objetos Actividad contenidos en un arreglo
+     * @param listGuardada
+     * @param listActual
+     * @return 
+     */
+    private boolean buscarDiferencias(ArrayList<Actividad> listGuardada, ArrayList<Actividad> listActual){
+        for (int i = 0; i < listActual.size(); i++) {
+                if (listActual.get(i).equals(listGuardada.get(i))) {
+                return true;
+            }
+        }
+        return false;
     }
 
+    /**
+     * Pregunta al usuario si guardar antes de salir en caso de que se detecten
+     * cambios.
+     */
     private void cerrar() {
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 if (detectarCambios()) {
-                    if (JOptionPane.showConfirmDialog(rootPane, "¡Se han detectados cambios sin guardar!\n¿Desea guardar antes de salir?",
+                    if (JOptionPane.showConfirmDialog(rootPane, "¡Se han detectados cambios sin guardar!\n¿Desea salir sin guardar?",
                             "Salir del sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
-                        System.exit(0);
-                    } else {
                         guardar();
                         System.exit(0);
+                    } else {
+                        System.exit(0);
                     }
-                }
-                else{
+                } else {
                     System.exit(0);
                 }
-
             }
         });
     }
 
+    /**
+     * Guarda los objetos Actividad en el archivo .bin determinado para cada uno
+     * llamando a los metodos encargados para ello.
+     */
     private void guardar() {
-        this.panelUno.setListaActividades(this.quitarMouseListener(this.panelUno.getListaActividades()));
-        this.panelDos.setListaActividades(this.quitarMouseListener(this.panelDos.getListaActividades()));
-        this.panelTres.setListaActividades(this.quitarMouseListener(this.panelTres.getListaActividades()));
+        this.panelPorHacer.setListaActividades(this.quitarMouseListener(this.panelPorHacer.getListaActividades()));
+        this.panelHaciendo.setListaActividades(this.quitarMouseListener(this.panelHaciendo.getListaActividades()));
+        this.panelHecho.setListaActividades(this.quitarMouseListener(this.panelHecho.getListaActividades()));
         this.recuperarActivididad.guardarActividades();
-        this.panelUno.setListaActividades(this.darMouseListener(this.panelUno.getListaActividades()));
-        this.panelDos.setListaActividades(this.darMouseListener(this.panelDos.getListaActividades()));
-        this.panelTres.setListaActividades(this.darMouseListener(this.panelTres.getListaActividades()));
+        this.panelPorHacer.setListaActividades(this.darMouseListener(this.panelPorHacer.getListaActividades()));
+        this.panelHaciendo.setListaActividades(this.darMouseListener(this.panelHaciendo.getListaActividades()));
+        this.panelHecho.setListaActividades(this.darMouseListener(this.panelHecho.getListaActividades()));
     }
 }

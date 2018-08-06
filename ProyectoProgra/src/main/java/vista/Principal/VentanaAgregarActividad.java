@@ -5,17 +5,13 @@
  */
 package vista.Principal;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
@@ -24,16 +20,22 @@ import javax.swing.JTextField;
  */
 public class VentanaAgregarActividad extends JFrame{
     
-    private JPanel panelTitulo,panelDatos, panelBoton;
+    private JPanel panelTitulo;
+    private JPanel panelDatos;
+    private JPanel panelBoton;
     public JButton botonAceptar;
     private JLabel nombreActividad;
     public JTextField areaNombreActividad;
     private String nombre;
+    
     public VentanaAgregarActividad() {
-        inicializar();
+        iniComp();
     }
-
-    private void inicializar() {
+    
+    /**
+     * Carga, ordena, configura y agrega todos los elementos que contendrá la ventana
+     */
+    private void iniComp() {
         GridLayout distribucion = new GridLayout(3,1);
         this.setLayout(distribucion);
         
@@ -60,7 +62,10 @@ public class VentanaAgregarActividad extends JFrame{
         this.setLocationRelativeTo(null);
         this.setResizable(false);
     }
-    
+    /**
+     * Obtiene lo escrito en el JTextField areaNombreActividad y lo guarda en el
+     * atributo nombre
+     */
     public void extraerDatos() {
         this.nombre = areaNombreActividad.getText();
     }

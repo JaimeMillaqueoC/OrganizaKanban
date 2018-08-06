@@ -17,9 +17,13 @@ import vista.Principal.VentanaPrincipal;
  * @author analista.apoyo1
  */
 public class VentanaSplash extends JWindow{
-    Image bi=Toolkit.getDefaultToolkit().getImage("Utilizables/bienvenido.png");
-    ImageIcon ii=new ImageIcon(bi);
-
+    private final Image bi=Toolkit.getDefaultToolkit().getImage("utilizables/bienvenido.png");
+    private final ImageIcon ii=new ImageIcon(bi);
+    
+    /**
+     * CONSTRUCTOR: Carga los datos de la VentanaSplash, además espera unos segundo para cerrarse y
+    posteriormente abrir la clase (ventana) VentanaPrincipal
+     */
     public VentanaSplash() {
         try{
             setSize(ii.getIconWidth(),ii.getIconHeight());
@@ -33,7 +37,10 @@ public class VentanaSplash extends JWindow{
             exception.printStackTrace();
         }  
     }
-    
+    /**
+     * Coloca una imagen especifica en el fondo de la VentanaSplash
+     * @param g 
+     */
     public void paint(Graphics g){
         g.drawImage(bi,0,0,this);
     }

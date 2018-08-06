@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import vista.Principal.Actividad;
 import vista.Principal.Panel;
 
 /**
@@ -13,28 +14,29 @@ import vista.Principal.Panel;
  */
 public class GestionarActividades {
     
-    private Actividad actividad;
-    private Panel panel1,panel2,panel3;
-
-    public GestionarActividades(Panel panel1, Panel panel2, Panel panel3) {
-        this.panel1 = panel1;
-        this.panel2 = panel2;
-        this.panel3 = panel3;
+    private Panel panelPorHacer;
+    private Panel panelHaciendo;
+    private Panel panelHecho;
+    
+    public GestionarActividades(Panel panelPorHacer, Panel panelHaciendo, Panel panelHecho) {
+        this.panelPorHacer = panelPorHacer;
+        this.panelHaciendo = panelHaciendo;
+        this.panelHecho = panelHecho;
     }
     
     public Panel agregarActividadPanelPorHacer(Actividad actividad){
-        this.panel1.agregarLista(actividad);
-        this.panel1.add(actividad);
-        return this.panel1;
+        this.panelPorHacer.agregarActividad(actividad);
+        this.panelPorHacer.add(actividad);
+        return this.panelPorHacer;
     }
     public Panel agregarActividadPanelHaciendo(Actividad actividad){
-        this.panel2.agregarLista(actividad);
-        this.panel2.add(actividad);
-        return this.panel2;
+        this.panelHaciendo.agregarActividad(actividad);
+        this.panelHaciendo.add(actividad);
+        return this.panelHaciendo;
     }
     public Panel agregarActividadPanelHecho(Actividad actividad){
-        this.panel3.agregarLista(actividad);
-        this.panel3.add(actividad);
-        return this.panel3;
+        this.panelHecho.agregarActividad(actividad);
+        this.panelHecho.add(actividad);
+        return this.panelHecho;
     }  
 }

@@ -7,18 +7,21 @@ package vista.Principal;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import modelo.Usuario;
+import utilidades.ManejoArchivos;
+import utilidades.Ruta;
 
 /**
  *
@@ -26,39 +29,48 @@ import modelo.Usuario;
  */
 public class PanelPerfil extends JPanel {
 
-    private Image fondo;
     private Usuario user;
     public JButton btnAniadirNuevo;
     private String primerNombre;
     private String universidad;
-    private String rutaFoto;
-    private JLabel lblNombre, lblUniversidad, imagen;
+    private String rutaImagenUsuario;
+    private JLabel lblNombre;
+    private JLabel lblUniversidad;
+    private JLabel imagenUsuario;
+    private final int ESCALADO_X = 130;
+    private final int ESCALADO_Y = 120;
+    private Ruta r;
+    private ManejoArchivos mArchivos;
 
     public PanelPerfil(Usuario user) {
         this.user = user;
         this.primerNombre = this.user.getNombre();
         this.universidad = this.user.getUniversidad();
-        this.rutaFoto = this.user.getRutaFoto();
+        this.rutaImagenUsuario = this.user.getRutaFoto();
+        this.r = new Ruta();
+        this.mArchivos = new ManejoArchivos();
         this.inicializarComponentes();
     }
 
+    /**
+     * Carga, ordena, configura y agrega todos los elementos que contendrá el
+     * panel
+     */
     private void inicializarComponentes() {
         GridLayout distribucion = new GridLayout(4, 1);
         this.setLayout(distribucion);
         javax.swing.border.Border bordejpanel = new TitledBorder(new LineBorder(Color.BLACK), "Usuario");
         this.setBorder(bordejpanel);
-
-        ImageIcon image = new ImageIcon(this.rutaFoto);
-        image = new ImageIcon(image.getImage().getScaledInstance(100, 100, BufferedImage.SCALE_SMOOTH));
-        this.imagen = new JLabel(image);
-//        this.imagen.setIcon(image);
-        this.add(this.imagen);
-
-        JPanel panelDatos = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        
+        this.comprobarRuta();
+        
+        JPanel panelDatos = new JPanel(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
         this.lblNombre = new JLabel(this.primerNombre);
-        panelDatos.add(lblNombre);
+        panelDatos.add(this.lblNombre, c);
         this.lblUniversidad = new JLabel(this.universidad);
-        panelDatos.add(this.lblUniversidad);
+        c.gridy = 1;
+        panelDatos.add(this.lblUniversidad, c);
         this.add(panelDatos);
 
         this.btnAniadirNuevo = new JButton("Añadir Actividad");
@@ -69,11 +81,22 @@ public class PanelPerfil extends JPanel {
 
     }
 
-    @Override
-    public void paint(Graphics g) {
-        g.drawImage(fondo, 0, 0, this.getWidth(), this.getHeight(), this);
-        this.setOpaque(false);
-        super.paint(g);
+    private void comprobarRuta() {
+        File archivo = new File(this.rutaImagenUsuario);
+        if (!archivo.exists()) {
+            JOptionPane.showMessageDialog(null, "No se a encontrado la imagen en la ruta:\n"+this.rutaImagenUsuario+"\nSe ha cambiado a la imagen predeterminada", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            this.rutaImagenUsuario = this.r.RUTA_IMAGEN_USUARIO_PREDETERMINADA;
+            this.user.setRutaFoto(this.rutaImagenUsuario);
+            this.mArchivos.guardarDatos(this.user, this.r.RUTA_USUARIO);
+        }
+        cargarImagen(this.rutaImagenUsuario);
+    }
+
+    private void cargarImagen(String ruta) {
+        ImageIcon image = new ImageIcon(ruta);
+        image = new ImageIcon(image.getImage().getScaledInstance(this.ESCALADO_X, this.ESCALADO_Y, BufferedImage.SCALE_SMOOTH));
+        this.imagenUsuario = new JLabel(image);
+        this.add(this.imagenUsuario);
     }
 
     public void setUser(Usuario user) {
@@ -88,15 +111,26 @@ public class PanelPerfil extends JPanel {
         this.lblUniversidad.setText(universidad);
     }
 
-    public void setRutaFoto(String rutaFoto) {
-        this.rutaFoto = rutaFoto;
-        ImageIcon image = new ImageIcon(this.rutaFoto);
-        image = new ImageIcon(image.getImage().getScaledInstance(100, 100, BufferedImage.SCALE_SMOOTH));
-        this.imagen.setIcon(image);
-        this.updateUI();
-        
+    /**
+     * Redefine el atributo rutaImagenUsuario y ademas llama al metodo
+     * editarImagenUsuario()
+     *
+     * @param rutaImagenUsuario
+     */
+    public void setRutaImagenUsuario(String rutaImagenUsuario) {
+        this.rutaImagenUsuario = rutaImagenUsuario;
+        this.editarImagenUsuario();
     }
-    
-    
+
+    /**
+     * Redefine la imagen del usuario con la ruta de la imagen especificada por
+     * el usuario
+     */
+    private void editarImagenUsuario() {
+        ImageIcon image = new ImageIcon(this.rutaImagenUsuario);
+        image = new ImageIcon(image.getImage().getScaledInstance(this.ESCALADO_X, this.ESCALADO_Y, BufferedImage.SCALE_SMOOTH));
+        this.imagenUsuario.setIcon(image);
+        this.updateUI();
+    }
 
 }

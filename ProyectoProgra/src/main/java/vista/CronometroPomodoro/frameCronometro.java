@@ -7,7 +7,6 @@ package vista.CronometroPomodoro;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
@@ -19,7 +18,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import modelo.Actividad;
+import vista.Principal.Actividad;
 import modelo.Pomodoro;
 
 /**

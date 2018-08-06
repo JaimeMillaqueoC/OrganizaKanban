@@ -8,7 +8,8 @@ package vista.EditarPerfil;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
-import modelo.ManejoArchivos;
+import utilidades.ManejoArchivos;
+import utilidades.Ruta;
 import modelo.Usuario;
 import vista.Principal.VentanaPrincipal;
 
@@ -22,13 +23,17 @@ public class VentanaEditarUsuario extends JFrame implements ActionListener{
     private PanelEditar pEditar;
     private VentanaPrincipal vp;
     private ManejoArchivos mArchivos;
+    private final Ruta ruta;
+    
     public VentanaEditarUsuario(VentanaPrincipal vp) {
         this.vp = vp;
+        this.ruta = new Ruta();
         this.inicializarComponentes();
     }
-    
+    /**
+     * Carga, ordena, configura y agrega todos los elementos que contendrá la ventana
+     */
     private void inicializarComponentes(){
-        
         this.pEditar = new PanelEditar(this.vp.usuario.getRutaFoto());
         this.mArchivos = new ManejoArchivos();
         this.pEditar.getBtnCancelar().addActionListener(this);
@@ -56,26 +61,24 @@ public class VentanaEditarUsuario extends JFrame implements ActionListener{
             this.vp.usuario.setRutaFoto(this.pEditar.ruta);
             this.vp.usuario.setNombre(this.pEditar.tfNombre.getText()+" "+this.pEditar.tfApellido.getText());
             this.vp.usuario.setUniversidad(this.pEditar.tfInstitucion.getText());
-            this.mArchivos.guardarDatos(this.vp.usuario, "Datos/datosUsuario.bin");
+            this.mArchivos.guardarDatos(this.vp.usuario, this.ruta.RUTA_USUARIO);
             this.vp.panelPerfil.setUser(this.vp.usuario);
             this.vp.panelPerfil.setNombre(this.pEditar.tfNombre.getText()+" "+this.pEditar.tfApellido.getText());
             this.vp.panelPerfil.setLblUniversidad(this.pEditar.tfInstitucion.getText());
-            this.vp.panelPerfil.setRutaFoto(this.pEditar.ruta);
+            this.vp.panelPerfil.setRutaImagenUsuario(this.pEditar.ruta);
             this.vp.panelPerfil.updateUI();
             this.dispose();
             
         }
         if (this.pEditar.getBtnPredeterminado() == e.getSource()) {
-            this.vp.usuario = (Usuario) this.mArchivos.cargarDatos("Predeterminado/datosUsuario.bin");
-            this.mArchivos.guardarDatos(this.vp.usuario, "Datos/datosUsuario.bin");
+            this.vp.usuario = (Usuario) this.mArchivos.recuperarDatosUsuario(this.ruta.RUTA_USUARIO_PREDETERMINADO);
+            this.mArchivos.guardarDatos(this.vp.usuario, this.ruta.RUTA_USUARIO);
             this.vp.panelPerfil.setUser(this.vp.usuario);
             this.vp.panelPerfil.setNombre(this.vp.usuario.getNombre());
             this.vp.panelPerfil.setLblUniversidad(this.vp.usuario.getUniversidad());
-            this.vp.panelPerfil.setRutaFoto(this.vp.usuario.getRutaFoto());
+            this.vp.panelPerfil.setRutaImagenUsuario(this.vp.usuario.getRutaFoto());
             this.vp.panelPerfil.updateUI();
             this.dispose();
         }
     }
-    
-    
 }

@@ -15,13 +15,23 @@ import javax.swing.JMenuItem;
  */
 
 public class BarraMenu extends JMenuBar {
-    private JMenu perfil,ayuda,estadisticas;
-    public JMenuItem editarPerfil,salir,guardar,informacion,contacto,datosTarea,otrosDatos;
+    private JMenu perfil;
+    private JMenu ayuda;
+    private JMenu estadisticas;
+    public JMenuItem editarPerfil;
+    public JMenuItem salir;
+    public JMenuItem guardar;
+    public JMenuItem informacion;
+    public JMenuItem contacto;
+    public JMenuItem datosTarea;
+    public JMenuItem otrosDatos;
 
     public BarraMenu() {
         inicilizarBarra();
     }
-
+    /**
+     * Carga, ordena, configura y agrega todos los elementos que contendrá el JMenuBar
+     */
     private void inicilizarBarra() {
         this.perfil = new JMenu("Perfil");
         this.estadisticas = new JMenu("Estadisticas");
