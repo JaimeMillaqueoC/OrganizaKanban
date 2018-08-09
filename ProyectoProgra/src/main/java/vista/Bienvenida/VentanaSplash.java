@@ -10,21 +10,23 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JWindow;
-import vista.Principal.VentanaPrincipal;
+import vista.principal.VentanaPrincipal;
 
 /**
  *
  * @author analista.apoyo1
  */
 public class VentanaSplash extends JWindow{
-    private final Image bi=Toolkit.getDefaultToolkit().getImage("utilizables/bienvenido.png");
-    private final ImageIcon ii=new ImageIcon(bi);
+    private Image bi;
+    private ImageIcon ii;
     
     /**
      * CONSTRUCTOR: Carga los datos de la VentanaSplash, además espera unos segundo para cerrarse y
     posteriormente abrir la clase (ventana) VentanaPrincipal
      */
     public VentanaSplash() {
+        this.bi=Toolkit.getDefaultToolkit().getImage("utilizables/bienvenido.png");
+        this.ii = new ImageIcon(bi);
         try{
             setSize(ii.getIconWidth(),ii.getIconHeight());
             setLocationRelativeTo(null);
@@ -33,14 +35,14 @@ public class VentanaSplash extends JWindow{
             dispose();
             VentanaPrincipal ventanaPrincipal = new VentanaPrincipal();
         }
-        catch(Exception exception){
-            exception.printStackTrace();
+        catch(InterruptedException exception){
         }  
     }
     /**
      * Coloca una imagen especifica en el fondo de la VentanaSplash
      * @param g 
      */
+    @Override
     public void paint(Graphics g){
         g.drawImage(bi,0,0,this);
     }

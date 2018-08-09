@@ -17,7 +17,6 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import vista.Principal.Actividad;
 
 /**
  *

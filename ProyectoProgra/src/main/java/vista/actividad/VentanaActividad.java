@@ -31,9 +31,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import utilidades.Ruta;
-import vista.CronometroPomodoro.frameCronometro;
-import vista.Principal.Actividad;
-import vista.Principal.Panel;
+import vista.CronometroPomodoro.FrameCronometro;
+import vista.principal.Actividad;
+import vista.principal.Panel;
 
 /**
  *
@@ -43,9 +43,7 @@ public class VentanaActividad extends JFrame implements ActionListener, MouseLis
 
     private final Actividad actividad;
     private JTextField tituloActividad;
-    private JPanel panelSuperior;
     private PanelVistaActividad PanelCentral;
-    private JPanel PanelInferior;
     private JTextArea descripcion;
     private JButton botonGuardar;
     private JButton btnCronometro;
@@ -68,9 +66,7 @@ public class VentanaActividad extends JFrame implements ActionListener, MouseLis
 
     private void agregarPaneles() {
         this.setLayout(new GridLayout());
-        this.panelSuperior = new JPanel(new GridBagLayout());
         this.PanelCentral = new PanelVistaActividad();
-        this.PanelInferior = new JPanel(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -170,7 +166,7 @@ public class VentanaActividad extends JFrame implements ActionListener, MouseLis
             this.dispose();
         }
         if (this.btnCronometro == e.getSource()) {
-            frameCronometro f = new frameCronometro(this.actividad);
+            FrameCronometro f = new FrameCronometro(this.actividad);
         }
         if (this.btnBorrar == e.getSource()) {
             this.borrarActividad();
@@ -219,6 +215,7 @@ public class VentanaActividad extends JFrame implements ActionListener, MouseLis
         ImageIcon imagen = new ImageIcon(ruta);
         Icon icono = new ImageIcon(imagen.getImage());
         btn.setIcon(icono);
+        btn.setBackground(Color.orange);
         btn.setBorder(null);
         btn.setBorderPainted(false);
         btn.setContentAreaFilled(false);

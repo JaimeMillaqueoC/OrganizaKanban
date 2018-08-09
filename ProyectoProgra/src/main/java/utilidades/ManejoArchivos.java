@@ -16,7 +16,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import vista.Principal.Actividad;
+import vista.principal.Actividad;
 
 /**
  *
@@ -94,7 +94,6 @@ public class ManejoArchivos {
                 ois.close();
             }
         } catch (EOFException e1) {
-            System.out.println("ERROR");
 //            e1.printStackTrace();
         } catch (IOException | ClassNotFoundException e2) {
             e2.getMessage();
@@ -105,9 +104,11 @@ public class ManejoArchivos {
    * Guarda los objetos Actividad dentro de un archivo .bin 
    * @param actividades
    * @param ruta 
+     * @return  
    */
-    public void almacenarActividades(ArrayList<Actividad> actividades, String ruta) {
+    public boolean almacenarActividades(ArrayList<Actividad> actividades, String ruta) {
         FileOutputStream fo = null;
+        boolean error = false;
         try {
 
             File f = new File(ruta);
@@ -120,13 +121,14 @@ public class ManejoArchivos {
 
         } catch (IOException e) {
             e.getMessage();
+            error = true;
         } finally {
             try {
                 fo.close();
             } catch (IOException ex) {
-                Logger.getLogger(ManejoArchivos.class.getName()).log(Level.SEVERE, null, ex);
+                error = true;
             }
         }
-
+        return error;
     }
 }

@@ -8,7 +8,7 @@ package modelo;
 import utilidades.ManejoArchivos;
 import utilidades.Ruta;
 import javax.swing.JOptionPane;
-import vista.Principal.Panel;
+import vista.principal.Panel;
 
 /**
  *
@@ -39,10 +39,21 @@ public class RecuperadorActivdades {
      * Llama a la clase ManejoArchivos para almacenar los objetos Actividad (que se encuentran 
     dentro de cada panel) en un archivo .bin disponible para cada panel
      */
-    public void guardarActividades() {
-        this.mArchivos.almacenarActividades(this.panelPorhacer.getListaActividades(), this.ruta.PANEL_POR_HACER);
-        this.mArchivos.almacenarActividades(this.panelHaciendo.getListaActividades(), this.ruta.PANEL_HACIENDO);
-        this.mArchivos.almacenarActividades(this.panelHecho.getListaActividades(), this.ruta.PANEL_HECHO);
-        JOptionPane.showMessageDialog(null, "Las actividades se han guardado correctamente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+    public void guardarActividades(){
+        int error = 0;
+        if (this.mArchivos.almacenarActividades(this.panelPorhacer.getListaActividades(), this.ruta.PANEL_POR_HACER)) {
+            error++;
+        }
+        if (this.mArchivos.almacenarActividades(this.panelHaciendo.getListaActividades(), this.ruta.PANEL_HACIENDO)) {
+            error++;
+        }
+        if (this.mArchivos.almacenarActividades(this.panelHecho.getListaActividades(), this.ruta.PANEL_HECHO)) {
+            error++;
+        }
+        if (error==0) {
+            JOptionPane.showMessageDialog(null, "Las actividades se han guardado correctamente", "Aviso", JOptionPane.INFORMATION_MESSAGE);   
+        }else
+            JOptionPane.showMessageDialog(null, "ERROR!: los cambios no se han guardado ", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        
     }
 }

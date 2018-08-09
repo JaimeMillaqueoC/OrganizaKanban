@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import utilidades.ManejoArchivos;
 import utilidades.Ruta;
 import modelo.Usuario;
-import vista.Principal.VentanaPrincipal;
+import vista.principal.VentanaPrincipal;
 
 
 /**
@@ -76,7 +76,7 @@ public class VentanaEditarUsuario extends JFrame implements ActionListener{
             this.vp.panelPerfil.setUser(this.vp.usuario);
             this.vp.panelPerfil.setNombre(this.vp.usuario.getNombre());
             this.vp.panelPerfil.setLblUniversidad(this.vp.usuario.getUniversidad());
-            this.vp.panelPerfil.setRutaImagenUsuario(this.vp.usuario.getRutaFoto());
+            this.vp.panelPerfil.setRutaImagenUsuario(this.ruta.IMAGEN_USUARIO_PREDETERMINADA);
             this.vp.panelPerfil.updateUI();
             this.dispose();
         }

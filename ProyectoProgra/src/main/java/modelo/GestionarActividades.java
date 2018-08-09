@@ -5,8 +5,8 @@
  */
 package modelo;
 
-import vista.Principal.Actividad;
-import vista.Principal.Panel;
+import vista.principal.Actividad;
+import vista.principal.Panel;
 
 /**
  *
@@ -39,18 +39,4 @@ public class GestionarActividades {
         this.panelHecho.add(actividad);
         return this.panelHecho;
     }  
-
-    public Panel getPanelPorHacer() {
-        return panelPorHacer;
-    }
-
-    public Panel getPanelHaciendo() {
-        return panelHaciendo;
-    }
-
-    public Panel getPanelHecho() {
-        return panelHecho;
-    }
-    
-    
 }
