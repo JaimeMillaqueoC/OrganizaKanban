@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import javax.swing.JOptionPane;
 import vista.Principal.Actividad;
 import vista.CronometroPomodoro.frameCronometro;
 /**
@@ -22,6 +23,7 @@ public class Pomodoro implements Runnable {
     private int segundosActividad;
     private int segundosPomodoro = 1500;
     private int segundosDescanso = 300;
+    private int totalDuracion = 6900;
     
     private int pomodoroActividad;
     private int descansosActividad;
@@ -94,17 +96,12 @@ public class Pomodoro implements Runnable {
         Thread.sleep(1000);
     }
     
-    
-    private void lanzarDescanzo() throws InterruptedException {
-        for (int i = 0; i <=this.duracionDescanzo; i++) {
-                        Thread.sleep(1000);
-                        this.rest--;
-                        segundosActividad++;
-                        actualizarThread();
-                    }
-    }
 
     private void actualizarThread() {
+        
+        if(this.segundosActividad == this.totalDuracion){
+            finRutina();
+        }
         if (isLive() == true) {
             this.hr= segundosActividad/3600;
             this.min =(segundosActividad-hr*3600)/60;
@@ -150,9 +147,11 @@ public class Pomodoro implements Runnable {
         reloj.botonStart.setEnabled(true);
         reloj.botonStop.setEnabled(false);
         reloj.botonPause.setEnabled(false);
+        reloj.botonStart.setEnabled(false);
         setLive(false);
         setGo(false);
-        setSegundos(0);
+        reloj.guardarFin(true, this.segundosActividad);
+        JOptionPane.showMessageDialog(null, "Catividad Finalizada \n Felicitaciones");
     }
     
     public void createThread() {

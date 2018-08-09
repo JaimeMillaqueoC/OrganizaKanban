@@ -39,4 +39,18 @@ public class GestionarActividades {
         this.panelHecho.add(actividad);
         return this.panelHecho;
     }  
+
+    public Panel getPanelPorHacer() {
+        return panelPorHacer;
+    }
+
+    public Panel getPanelHaciendo() {
+        return panelHaciendo;
+    }
+
+    public Panel getPanelHecho() {
+        return panelHecho;
+    }
+    
+    
 }

@@ -6,6 +6,7 @@
 package vista.Principal;
 
 import java.awt.Color;
+import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -26,6 +27,8 @@ public class Actividad extends JPanel {
     private int segundosActividad;
     private int cantidadPomodorosHechos;
     private int cantidadDescanzosHechos;
+    private boolean estado;
+    private Date fecha;
 
     public Actividad() {
         agregarDatos();
@@ -34,6 +37,9 @@ public class Actividad extends JPanel {
     
     public Actividad(String nombre) {
         this.nombre = nombre;
+        this.estado = false;
+        this.fecha = new Date();
+        this.segundosActividad = 6897;
         this.Descripcion = "";
         agregarDatos();
     }
@@ -107,6 +113,16 @@ public class Actividad extends JPanel {
             this.setBackground(this.color);
         }
     }
+
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+    
+    
     
 
     public Color getColorPre() {

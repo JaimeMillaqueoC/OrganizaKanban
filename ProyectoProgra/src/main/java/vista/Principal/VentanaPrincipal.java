@@ -18,15 +18,16 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import modelo.GestionarActividades;
+import modelo.GestorEstadisticas;
 import utilidades.ManejoArchivos;
 import utilidades.Ruta;
 import modelo.RecuperadorActivdades;
 import modelo.Usuario;
+import utilidades.DatosGraficos;
 import vista.Ayuda.VentanaContacto;
 import vista.Ayuda.VentanaInformaciones;
 import vista.EditarPerfil.VentanaEditarUsuario;
 import vista.Estadisticas.VentanaEstadisticasTareas;
-import vista.Estadisticas.VentanaOtrasEstadisticas;
 
 /**
  *
@@ -47,12 +48,13 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
     private Actividad actividad;
     private VentanaAgregarActividad ventanaAgregarActividad;
     private VentanaEstadisticasTareas estadisticas;
-    private VentanaOtrasEstadisticas otrasEstadisticas;
     private VentanaEditarUsuario ventanaEditarUsuario;
     private VentanaContacto contacto;
     private VentanaInformaciones informaciones;
     private RecuperadorActivdades recuperarActivididad;
 
+    private GestorEstadisticas gestorEstadisticas;
+    private DatosGraficos datosGrafico;
     private VentanaActividad ventanaActividad;
 
     private final int cantidadPanelesActividad = 10;
@@ -122,8 +124,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
      */
     private void acciones() {
         this.barraSuperior.editarPerfil.addActionListener(this);
-        this.barraSuperior.otrosDatos.addActionListener(this);
-        this.barraSuperior.datosTarea.addActionListener(this);
+        this.barraSuperior.estadisticasActividades.addActionListener(this);
         this.barraSuperior.contacto.addActionListener(this);
         this.barraSuperior.informacion.addActionListener(this);
         this.barraSuperior.guardar.addActionListener(this);
@@ -149,6 +150,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
      */
     private void gestorActividades() {
         this.gestor = new GestionarActividades(panelPorHacer, panelHaciendo, panelHecho);
+        this.gestorEstadisticas = new GestorEstadisticas(this.gestor);
+        this.datosGrafico = new DatosGraficos(this.gestorEstadisticas);
     }
 
     @Override
@@ -168,20 +171,15 @@ public class VentanaPrincipal extends JFrame implements ActionListener, MouseLis
             this.ventanaEditarUsuario = new VentanaEditarUsuario(this);
             this.ventanaEditarUsuario.setVisible(true);
         }
-        if (this.barraSuperior.datosTarea == e.getSource()) {
+        if (this.barraSuperior.estadisticasActividades == e.getSource()) {
             if (this.estadisticas != null) {
                 this.estadisticas.dispose();
             }
-            this.estadisticas = new VentanaEstadisticasTareas();
+            this.estadisticas = new VentanaEstadisticasTareas(this.datosGrafico.getChartPanelBarra()
+            ,this.datosGrafico.getChartPanelLinea(), this.datosGrafico.getChartPanelPie(), this.gestorEstadisticas );
             this.estadisticas.setVisible(true);
         }
-        if (this.barraSuperior.otrosDatos == e.getSource()) {
-            if (this.otrasEstadisticas != null) {
-                this.otrasEstadisticas.dispose();
-            }
-            this.otrasEstadisticas = new VentanaOtrasEstadisticas();
-            this.otrasEstadisticas.setVisible(true);
-        }
+
         if (this.barraSuperior.contacto == e.getSource()) {
             if (this.contacto != null) {
                 this.contacto.dispose();

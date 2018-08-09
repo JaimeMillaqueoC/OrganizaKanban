@@ -23,8 +23,7 @@ public class BarraMenu extends JMenuBar {
     public JMenuItem guardar;
     public JMenuItem informacion;
     public JMenuItem contacto;
-    public JMenuItem datosTarea;
-    public JMenuItem otrosDatos;
+    public JMenuItem estadisticasActividades;
 
     public BarraMenu() {
         inicilizarBarra();
@@ -41,8 +40,7 @@ public class BarraMenu extends JMenuBar {
         this.guardar = new JMenuItem("Guardar Cambios");
         this.salir = new JMenuItem("Salir sin Guardar");
         
-        this.datosTarea = new JMenuItem("Estadisticas Tareas");
-        this.otrosDatos = new JMenuItem("Otras Estdisticas");
+        this.estadisticasActividades = new JMenuItem("Estadisticas Tareas");
         
         this.informacion = new JMenuItem("Informaciones");
         this.contacto = new JMenuItem("Contacto");
@@ -55,8 +53,7 @@ public class BarraMenu extends JMenuBar {
         perfil.add(guardar);
         perfil.add(salir);
         
-        estadisticas.add(datosTarea);
-        estadisticas.add(otrosDatos);
+        estadisticas.add(estadisticasActividades);
         
         ayuda.add(informacion);
         ayuda.add(contacto);

@@ -221,15 +221,10 @@ public class frameCronometro extends JFrame {
         return displayIzquierdoSuperior;
     }
     
-    public void guardarDatos(){
-        int temporalCantidadPomodoros = actividad.getCantidadPomodorosHechos();
-        temporalCantidadPomodoros++;
-        actividad.setCantidadPomodorosHechos(temporalCantidadPomodoros);
-    }
+
     
-    public int getCantidadPomodoro() {
-        int cantidad = this.actividad.getCantidadPomodorosHechos();
-        return cantidad;
+    public void guardarFin(Boolean valor, int segundos) {
+        this.actividad.setSegundosActividad(segundos);
+        this.actividad.setEstado(valor);
     }
-    
 }
